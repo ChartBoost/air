@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>362F8486-C639-4CDD-A641-BC020FB4BD16</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ChartboostAIR</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>05DA9D1A-C717-4C34-A0E0-F460D4D98D51</key>
+		<string>ssh://github.com/ChartBoost/adobeair</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>native_ios/ChartboostAIR.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>05DA9D1A-C717-4C34-A0E0-F460D4D98D51</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/ChartBoost/adobeair</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>05DA9D1A-C717-4C34-A0E0-F460D4D98D51</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>05DA9D1A-C717-4C34-A0E0-F460D4D98D51</string>
+			<key>IDESourceControlWCCName</key>
+			<string>adobeair</string>
+		</dict>
+	</array>
+</dict>
+</plist>

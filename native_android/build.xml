@@ -1,0 +1,54 @@
+<project name="Chartboost Build Script" basedir="." default="package">
+		
+	<!-- Set variables for build directories -->
+	<property name="build.dir" value="build"/>
+	<property name="bin.dir" value="bin"/>
+	<property name="src.dir" value="src"/>
+	
+	<path id="classpath">
+	    <pathelement path="${build.dir}" />
+	</path>
+	
+	<property name="lib.dir" value="lib"/>
+	<property name="output" value="libChartboostAir.jar"/>
+	
+	<property name="libs.dir" value="libs"/>
+	
+	<property name="android.jar" value="${libs.dir}/android.jar"/>
+    <property name="chartboost.jar" value="${libs.dir}/chartboost.jar"/>
+    <property name="classpath" value="${android.jar};${chartboost.jar};${libs.dir}/FlashRuntimeExtensions.jar"/>
+	
+	<target name="-init" depends="clean">
+		<echo>Creating temporary folders...</echo>
+		<mkdir dir="${build.dir}"/>
+	</target>
+	
+	<target name="clean" description="Clean up">
+		<echo>Cleaning up...</echo>
+		<delete dir="${build.dir}"/>
+	</target>
+	
+	<target name="build" depends="-init" description="Build project">
+		<mkdir dir="${lib.dir}"/>
+		<echo>Copying files to build folder...</echo>
+        <javac srcdir="${src.dir}" destdir="${build.dir}" target="1.6" includeantruntime="false" classpath="${classpath}" />
+        <unzip src="${chartboost.jar}" dest="${build.dir}">
+            <patternset>
+                <include name="**/*.class"/>
+            </patternset>
+        </unzip>
+	</target>
+	
+	<target name="package" depends="build" description="Package jar">
+		<echo>Deleting files from local server...</echo>
+		<delete>
+			<fileset dir="${lib.dir}"/>
+		</delete>
+		
+		<echo>Copying files to jar output...</echo>
+		<jar jarfile="${lib.dir}/${output}" basedir="${build.dir}" />
+		
+		<antcall target="clean"/>
+	</target>
+	
+</project>

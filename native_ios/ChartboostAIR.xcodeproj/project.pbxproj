@@ -1,0 +1,314 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		831FE63B18451858006F69BA /* libarclite_iphoneos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 831FE63A18451858006F69BA /* libarclite_iphoneos.a */; };
+		8346A19F18186C0400EF5056 /* libChartboost.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83A850071814920700FD9FA7 /* libChartboost.a */; };
+		83A84FD218148EAC00FD9FA7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83A84FD118148EAC00FD9FA7 /* Foundation.framework */; };
+		83A8500F1814920700FD9FA7 /* ChartboostAIR.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A8500B1814920700FD9FA7 /* ChartboostAIR.m */; };
+		83A850101814920700FD9FA7 /* ChartboostWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A8500D1814920700FD9FA7 /* ChartboostWrapper.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		83A84FCC18148EAC00FD9FA7 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		831FE63A18451858006F69BA /* libarclite_iphoneos.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libarclite_iphoneos.a; path = iOS/libarclite_iphoneos.a; sourceTree = SOURCE_ROOT; };
+		83A84FCE18148EAC00FD9FA7 /* libChartboostAIR.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libChartboostAIR.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		83A84FD118148EAC00FD9FA7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		83A850041814920700FD9FA7 /* FlashRuntimeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlashRuntimeExtensions.h; sourceTree = "<group>"; };
+		83A850061814920700FD9FA7 /* Chartboost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chartboost.h; sourceTree = "<group>"; };
+		83A850071814920700FD9FA7 /* libChartboost.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libChartboost.a; sourceTree = "<group>"; };
+		83A850081814920700FD9FA7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		83A8500A1814920700FD9FA7 /* ChartboostAirPlugin-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ChartboostAirPlugin-Prefix.pch"; sourceTree = "<group>"; };
+		83A8500B1814920700FD9FA7 /* ChartboostAIR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChartboostAIR.m; sourceTree = "<group>"; };
+		83A8500C1814920700FD9FA7 /* ChartboostWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChartboostWrapper.h; sourceTree = "<group>"; };
+		83A8500D1814920700FD9FA7 /* ChartboostWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChartboostWrapper.m; sourceTree = "<group>"; };
+		83A850121814930600FD9FA7 /* ChartboostAIR.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChartboostAIR.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		83A84FCB18148EAC00FD9FA7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				831FE63B18451858006F69BA /* libarclite_iphoneos.a in Frameworks */,
+				8346A19F18186C0400EF5056 /* libChartboost.a in Frameworks */,
+				83A84FD218148EAC00FD9FA7 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		83A84FC518148EAC00FD9FA7 = {
+			isa = PBXGroup;
+			children = (
+				83A850031814920700FD9FA7 /* AIR */,
+				83A850051814920700FD9FA7 /* Chartboost */,
+				83A850091814920700FD9FA7 /* ChartboostAIR */,
+				83A84FD018148EAC00FD9FA7 /* Frameworks */,
+				83A84FCF18148EAC00FD9FA7 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		83A84FCF18148EAC00FD9FA7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				83A84FCE18148EAC00FD9FA7 /* libChartboostAIR.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		83A84FD018148EAC00FD9FA7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				83A84FD118148EAC00FD9FA7 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		83A850031814920700FD9FA7 /* AIR */ = {
+			isa = PBXGroup;
+			children = (
+				83A850041814920700FD9FA7 /* FlashRuntimeExtensions.h */,
+			);
+			path = AIR;
+			sourceTree = "<group>";
+		};
+		83A850051814920700FD9FA7 /* Chartboost */ = {
+			isa = PBXGroup;
+			children = (
+				83A850061814920700FD9FA7 /* Chartboost.h */,
+				83A850071814920700FD9FA7 /* libChartboost.a */,
+				83A850081814920700FD9FA7 /* README.md */,
+			);
+			path = Chartboost;
+			sourceTree = "<group>";
+		};
+		83A850091814920700FD9FA7 /* ChartboostAIR */ = {
+			isa = PBXGroup;
+			children = (
+				83A850111814926A00FD9FA7 /* Supporting Files */,
+				83A850121814930600FD9FA7 /* ChartboostAIR.h */,
+				83A8500B1814920700FD9FA7 /* ChartboostAIR.m */,
+				83A8500C1814920700FD9FA7 /* ChartboostWrapper.h */,
+				83A8500D1814920700FD9FA7 /* ChartboostWrapper.m */,
+			);
+			path = ChartboostAIR;
+			sourceTree = "<group>";
+		};
+		83A850111814926A00FD9FA7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				831FE63A18451858006F69BA /* libarclite_iphoneos.a */,
+				83A8500A1814920700FD9FA7 /* ChartboostAirPlugin-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		83A84FCD18148EAC00FD9FA7 /* ChartboostAIR */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 83A84FF118148EAC00FD9FA7 /* Build configuration list for PBXNativeTarget "ChartboostAIR" */;
+			buildPhases = (
+				83A84FCA18148EAC00FD9FA7 /* Sources */,
+				83A84FCB18148EAC00FD9FA7 /* Frameworks */,
+				83A84FCC18148EAC00FD9FA7 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ChartboostAIR;
+			productName = "Chartboost AIR Plugin";
+			productReference = 83A84FCE18148EAC00FD9FA7 /* libChartboostAIR.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		83A84FC618148EAC00FD9FA7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = Chartboost;
+			};
+			buildConfigurationList = 83A84FC918148EAC00FD9FA7 /* Build configuration list for PBXProject "ChartboostAIR" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 83A84FC518148EAC00FD9FA7;
+			productRefGroup = 83A84FCF18148EAC00FD9FA7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				83A84FCD18148EAC00FD9FA7 /* ChartboostAIR */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		83A84FCA18148EAC00FD9FA7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83A850101814920700FD9FA7 /* ChartboostWrapper.m in Sources */,
+				83A8500F1814920700FD9FA7 /* ChartboostAIR.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		83A84FEF18148EAC00FD9FA7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		83A84FF018148EAC00FD9FA7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		83A84FF218148EAC00FD9FA7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/Chartboost_AIR.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ChartboostAIR/ChartboostAIR-Prefix.pch";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/Chris/Desktop/ios/Chartboost\\ AIR\\ Plugin/Chartboost",
+					/Users/Chris/Desktop/air/git/native_ios/Chartboost,
+					/Users/Chris/Desktop/air/git/native_ios/iOS,
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = ChartboostAIR;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		83A84FF318148EAC00FD9FA7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/Chartboost_AIR.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ChartboostAIR/ChartboostAIR-Prefix.pch";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/Chris/Desktop/ios/Chartboost\\ AIR\\ Plugin/Chartboost",
+					/Users/Chris/Desktop/air/git/native_ios/Chartboost,
+					/Users/Chris/Desktop/air/git/native_ios/iOS,
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = ChartboostAIR;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		83A84FC918148EAC00FD9FA7 /* Build configuration list for PBXProject "ChartboostAIR" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83A84FEF18148EAC00FD9FA7 /* Debug */,
+				83A84FF018148EAC00FD9FA7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		83A84FF118148EAC00FD9FA7 /* Build configuration list for PBXNativeTarget "ChartboostAIR" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83A84FF218148EAC00FD9FA7 /* Debug */,
+				83A84FF318148EAC00FD9FA7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 83A84FC618148EAC00FD9FA7 /* Project object */;
+}

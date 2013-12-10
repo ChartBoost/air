@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   applicationDPI="160"
+			   applicationComplete="init()">
+	<fx:Script>
+		<![CDATA[
+			import com.chartboost.plugin.air.Chartboost;
+			import com.chartboost.plugin.air.ChartboostEvent;
+			
+			private var chartboost:Chartboost;
+			
+			private function init():void {
+				localTrace("Chartboost Actionscript init()");
+				// init
+				chartboost = Chartboost.getInstance();
+				if (Chartboost.isAndroid()) {
+					localTrace("Chartboost Actionscript Android init()");
+					chartboost.init("4f7aa26ef77659d869000003", "ee759deefd871ff6e2411c7153dbedefa4aabe38");
+				} else if (Chartboost.isIOS()) {
+					localTrace("Chartboost Actionscript iOS init()");
+					chartboost.init("4f21c409cd1cb2fb7000001b", "92e2de2fd7070327bdeb54c15a5295309c6fcd2d");
+				}
+				
+				// add listeners
+				chartboost.addEventListener(ChartboostEvent.INTERSTITIAL_CACHED, onAdCached);
+				chartboost.addEventListener(ChartboostEvent.INTERSTITIAL_SHOWED, onAdShowed);
+				chartboost.addEventListener(ChartboostEvent.INTERSTITIAL_DISMISSED, onAdDismissed);
+				chartboost.addEventListener(ChartboostEvent.INTERSTITIAL_FAILED, onAdFailed);
+			}
+			
+			private function onAdShowed( event:ChartboostEvent ):void {
+				localTrace( "Chartboost: on Interstitial showed: ", event.location );
+			}
+			
+			private function onAdCached( event:ChartboostEvent ):void {
+				localTrace( "Chartboost: on Interstitial cached: ", event.location );
+			}
+			
+			private function onAdDismissed( event:ChartboostEvent ):void {
+				localTrace( "Chartboost: on Interstitial dismissed: ", event.location );
+			}
+			
+			private function onAdFailed( event:ChartboostEvent ):void {
+				localTrace( "Chartboost: on Interstitial failed to load: ", event.location );
+			}
+			
+			public function localTrace(log:String, log2:String = ""):void {
+				logs.text = logs.text + "\n" + log + " \t" + log2;
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:layout>
+		<s:VerticalLayout/>
+	</s:layout>
+	
+	<s:Button id="showInterstitial" label="Show Interstitial" width="160" click="Chartboost.getInstance().showInterstitial();" />
+	<s:Button id="cacheInterstitial" label="Cache Interstitial" width="160" click="Chartboost.getInstance().cacheInterstitial();" />
+	<s:Button id="hasInterstitialCached" label="Is Interstitial Cached" width="160" click="localTrace('interstitial cached: ', Chartboost.getInstance().hasCachedInterstitial().toString());" />
+	<s:Button id="showMoreApps" label="Show More Apps" width="160" click="Chartboost.getInstance().showMoreApps();" />
+	<s:Button id="cacheMoreApps" label="Cache More Apps" width="160" click="Chartboost.getInstance().cacheMoreApps();" />
+	<s:Button id="hasMoreAppsCached" label="Is More Apps Cached" width="160" click="localTrace('more apps cached: ', Chartboost.getInstance().hasCachedMoreApps().toString());" />
+	
+	<s:TextArea id="logs" heightInLines="10" widthInChars="40" />
+</s:Application>
