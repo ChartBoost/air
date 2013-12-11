@@ -19,6 +19,7 @@ Use the Chartboost plugin for Adobe AIR to use Chartboost's full range of produc
 
 * Chartboost interstitials may not dismiss properly in apps with autoOrients set to true in the following circumstance: The device is rotated while an interstitial is displayed. The black interstitial background will remain until the device is rotated again or the view is refreshed (this may be possible through the `didDismissInterstitial` delegate method).
 
+Bug fixes, contributions, and feedback are all welcome at support@chartboost.com!
 ### Getting Started
 
 After you have set up your app on the Chartboost web portal, you are ready to begin integrating Chartboost into your AIR project.
