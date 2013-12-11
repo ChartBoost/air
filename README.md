@@ -2,7 +2,7 @@
 
 Use the Chartboost plugin for Adobe AIR to use Chartboost's full range of products and services in your Adobe AIR mobile app! Read more about getting started with Chartboost [here](https://help.chartboost.com/documentation).
 
-##### In this Repo
+### In this Repo
 
 **Source Code:** The source code and a build script for the ANE are included in this repo for **experienced AIR Native Extension developers only**. This build/build.config file must be updated with the AIRSDK_compiler (v3.9 recommended) build path. The build.sh script and .xcodeproj may require adjustments to work for your particular environment. While we may not be able to fully support altered versions of this open-source ANE, we're happy to help resolve problems with core functionality, and enourage you to contact us with questions about the SDKs.
 
