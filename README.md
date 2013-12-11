@@ -8,6 +8,17 @@ Use the Chartboost plugin for Adobe AIR to use Chartboost's full range of produc
 
 *Sample Project:* If you just want the ANE for use in your project, please refer to the "sample/ext" directory or [download it here](https://s3.amazonaws.com/chartboost/sdk_air/2013-12-09/Chartboost.ane). This folder includes files for a Flex Mobile app that can be used in Adobe Flash Builder to compile a simple sample project.
 
+### Known Issues
+
+##### iOS
+
+* Chartboost will be disabled in iOS versions below iOS 6. 
+* `hasCachedInterstitial` and `hasCachedMoreApps` calls will cause crashes on iOS 5; these methods must not be called on iOS 5! All other methods will fail silently on iOS 5. This is expected.
+
+##### Android
+
+* Chartboost interstitials may not dismiss properly in apps with autoOrients set to true in the following circumstance: The device is rotated while an interstitial is displayed. The black interstitial background will remain until the device is rotated again or the view is refreshed (this may be possible through the `didDismissInterstitial` delegate method).
+
 ### Getting Started
 
 After you have set up your app on the Chartboost web portal, you are ready to begin integrating Chartboost into your AIR project.
