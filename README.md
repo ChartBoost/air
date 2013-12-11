@@ -4,9 +4,9 @@ Use the Chartboost plugin for Adobe AIR to use Chartboost's full range of produc
 
 ##### In this Repo
 
-*Source Code:* The source code and a build script for the ANE are included in this repo for *experienced AIR Native Extension developers only*. This build/build.config file must be updated with the AIRSDK_compiler (v3.9 recommended) build path. The build.sh script and .xcodeproj may require adjustments to work for your particular environment. While we may not be able to fully support altered versions of this open-source ANE, we're happy to help resolve problems with core functionality, and enourage you to contact us with questions about the SDKs.
+**Source Code:** The source code and a build script for the ANE are included in this repo for *experienced AIR Native Extension developers only*. This build/build.config file must be updated with the AIRSDK_compiler (v3.9 recommended) build path. The build.sh script and .xcodeproj may require adjustments to work for your particular environment. While we may not be able to fully support altered versions of this open-source ANE, we're happy to help resolve problems with core functionality, and enourage you to contact us with questions about the SDKs.
 
-*Sample Project:* If you just want the ANE for use in your project, please refer to the "sample/ext" directory or [download it here](https://s3.amazonaws.com/chartboost/sdk_air/2013-12-09/Chartboost.ane). This folder includes files for a Flex Mobile app that can be used in Adobe Flash Builder to compile a simple sample project.
+**Sample Project:** If you just want the ANE for use in your project, please refer to the "sample/ext" directory or [download it here](https://s3.amazonaws.com/chartboost/sdk_air/2013-12-09/Chartboost.ane). This folder includes files for a Flex Mobile app that can be used in Adobe Flash Builder to compile a simple sample project.
 
 ### Known Issues
 
