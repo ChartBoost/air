@@ -4,7 +4,7 @@
 #import "Chartboost.h"
 #import "FlashRuntimeExtensions.h"
 
-#define AirDispatchAsync(_name_) if (self->_airContext != NULL) FREDispatchStatusEventAsync(self->_airContext, (const uint8_t *)#_name_, NULL)
+#define AirDispatchAsync(_name_) AirDispatchAsyncParam(_name_, @"")
 #define AirDispatchAsyncParam(_name_, _param_) if (self->_airContext != NULL) FREDispatchStatusEventAsync(self->_airContext, (const uint8_t *)#_name_, (const uint8_t *)[_param_ UTF8String])
 
 #define IS_IOS6 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 6)

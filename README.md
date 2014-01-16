@@ -1,32 +1,14 @@
-# Chartboost AIR
+# Chartboost Android and iOS Adobe AIR Plugin
 
-Use the Chartboost plugin for Adobe AIR to use Chartboost's full range of products and services in your Adobe AIR mobile app! If you just want the ANE for use in your project, please refer to the "sample/ext" directory or [download it here](https://s3.amazonaws.com/chartboost/sdk_air/2013-12-09/Chartboost.ane).
+Use the Chartboost plugin for Adobe AIR to add many features to your mobile games including displaying interstitials and more apps pages.
 
-Read more about getting started with Chartboost [here](https://help.chartboost.com/documentation).
+**Note** - The Chartboost Adobe AIR plugin is currently in Beta
 
-### In this Repo
-
-**Source Code:** The source code and a build script for the ANE are included in this repo for **experienced AIR Native Extension developers only**. This build/build.config file must be updated with the AIRSDK_compiler (v3.9 recommended) build path. The build.sh script and .xcodeproj may require adjustments to work for your particular environment. While we may not be able to fully support altered versions of this open-source ANE, we're happy to help resolve problems with core functionality, and enourage you to contact us with questions about the SDKs.
-
-**Sample Project:** The "sample" folder includes files for a Flex Mobile app that can be used in Adobe Flash Builder to compile a simple sample project.
-
-### Known Issues
-
-##### iOS
-
-* Chartboost will be disabled in iOS versions below iOS 6. 
-* `hasCachedInterstitial` and `hasCachedMoreApps` calls will cause crashes on iOS 5; these methods must not be called on iOS 5! All other methods will fail silently on iOS 5. This is expected.
-
-##### Android
-
-* Chartboost interstitials may not dismiss properly in apps with autoOrients set to true in the following circumstance: The device is rotated while an interstitial is displayed. The black interstitial background will remain until the device is rotated again or the view is refreshed (this may be possible through the `didDismissInterstitial` delegate method).
-
-Bug fixes, contributions, and feedback are all welcome at support@chartboost.com!
 ### Getting Started
 
 After you have set up your app on the Chartboost web portal, you are ready to begin integrating Chartboost into your AIR project.
 
-First, import the Chartboost native extension into your AIR app.  We recommend creating a directory in your project for native extensions, and copy `Chartboost.ane` to that directory. If you are using *Flash Builder*, you can just add that directory as a native extension directory in your project settings.
+First, import the Chartboost native extension into your AIR app.  We recommend creating a directory in your project for native extensions, and copy `Chartboost.ane` and `Chartboost.swc` to that directory.  Then, if you are using *Flash Builder*, you can just add that directory as a native extension directory in your project settings.
 
 Second, make sure you add the `<extensionID>` declaration to your AIR application descriptor's root `<application>` element like in the following example:
 

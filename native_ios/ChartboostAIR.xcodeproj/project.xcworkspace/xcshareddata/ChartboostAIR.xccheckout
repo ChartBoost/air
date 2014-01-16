@@ -5,36 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>362F8486-C639-4CDD-A641-BC020FB4BD16</string>
+	<string>C01A5E9E-C2A1-4A5A-8A3F-66F0500EB254</string>
 	<key>IDESourceControlProjectName</key>
 	<string>ChartboostAIR</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>05DA9D1A-C717-4C34-A0E0-F460D4D98D51</key>
-		<string>ssh://github.com/ChartBoost/adobeair</string>
+		<key>46145B76-E4D8-41E9-A4FC-BB35B322EE58</key>
+		<string>ssh://github.com/ChartBoost/air</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>native_ios/ChartboostAIR.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>05DA9D1A-C717-4C34-A0E0-F460D4D98D51</key>
+		<key>46145B76-E4D8-41E9-A4FC-BB35B322EE58</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://github.com/ChartBoost/adobeair</string>
+	<string>ssh://github.com/ChartBoost/air</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>05DA9D1A-C717-4C34-A0E0-F460D4D98D51</string>
+	<string>46145B76-E4D8-41E9-A4FC-BB35B322EE58</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>05DA9D1A-C717-4C34-A0E0-F460D4D98D51</string>
+			<string>46145B76-E4D8-41E9-A4FC-BB35B322EE58</string>
 			<key>IDESourceControlWCCName</key>
-			<string>adobeair</string>
+			<string>air</string>
 		</dict>
 	</array>
 </dict>

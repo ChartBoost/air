@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		831FE63B18451858006F69BA /* libarclite_iphoneos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 831FE63A18451858006F69BA /* libarclite_iphoneos.a */; };
-		8346A19F18186C0400EF5056 /* libChartboost.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83A850071814920700FD9FA7 /* libChartboost.a */; };
+		8346A19F18186C0400EF5056 /* libChartboost.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83A850071814920700FD9FA7 /* libChartboost.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		83A84FD218148EAC00FD9FA7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83A84FD118148EAC00FD9FA7 /* Foundation.framework */; };
 		83A8500F1814920700FD9FA7 /* ChartboostAIR.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A8500B1814920700FD9FA7 /* ChartboostAIR.m */; };
 		83A850101814920700FD9FA7 /* ChartboostWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A8500D1814920700FD9FA7 /* ChartboostWrapper.m */; };
@@ -46,7 +45,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				831FE63B18451858006F69BA /* libarclite_iphoneos.a in Frameworks */,
 				8346A19F18186C0400EF5056 /* libChartboost.a in Frameworks */,
 				83A84FD218148EAC00FD9FA7 /* Foundation.framework in Frameworks */,
 			);
@@ -212,7 +210,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -244,7 +242,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -257,15 +255,18 @@
 				DSTROOT = /tmp/Chartboost_AIR.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ChartboostAIR/ChartboostAIR-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/Chris/Desktop/ios/Chartboost\\ AIR\\ Plugin/Chartboost",
-					/Users/Chris/Desktop/air/git/native_ios/Chartboost,
-					/Users/Chris/Desktop/air/git/native_ios/iOS,
+					"$(SRCROOT)/Air",
+					"$(SRCROOT)/Chartboost",
+					"$(SRCROOT)/iOS",
+					"$(SRCROOT)/ChartboostAIR",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = ChartboostAIR;
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -275,15 +276,18 @@
 				DSTROOT = /tmp/Chartboost_AIR.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ChartboostAIR/ChartboostAIR-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/Chris/Desktop/ios/Chartboost\\ AIR\\ Plugin/Chartboost",
-					/Users/Chris/Desktop/air/git/native_ios/Chartboost,
-					/Users/Chris/Desktop/air/git/native_ios/iOS,
+					"$(SRCROOT)/Air",
+					"$(SRCROOT)/Chartboost",
+					"$(SRCROOT)/iOS",
+					"$(SRCROOT)/ChartboostAIR",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = ChartboostAIR;
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

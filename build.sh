@@ -1,10 +1,6 @@
 
-# get config data
-eval `sed '/^ *#/d;s/:/ /;' < "build/build.config" | while read key val
-do
-    str="$key='$val'"
-    echo "$str"
-done`
+# init
+source ./init.sh
 
 # build action script library
 echo "BUILDING ACTIONSCRIPT LIBRARY..."
@@ -24,7 +20,7 @@ echo " "
 
 # build iOS library
 echo "BUILDING IOS NATIVE LIBRARY..."
-xcodebuild -project native_ios/ChartboostAIR.xcodeproj -scheme 'ChartboostAIR' -configuration 'Release' CONFIGURATION_BUILD_DIR='bin'
+xcodebuild -project native_ios/ChartboostAIR.xcodeproj -target 'ChartboostAIR' -configuration 'Release' CONFIGURATION_BUILD_DIR='bin' build
 echo "BUILDING IOS NATIVE LIBRARY... COMPLETE!"
 echo " "
 

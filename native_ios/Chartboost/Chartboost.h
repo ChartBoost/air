@@ -1,7 +1,7 @@
 //
 //  Chartboost.h
 //  Chartboost
-//  v3.2.1
+//  3.3.1
 //
 //  Created by Kenneth Ballenegger on 8/1/11.
 //  Copyright 2011 Chartboost. All rights reserved.
@@ -30,36 +30,40 @@
 // Override the orientation (otherwise automatically detected from status bar)
 @property UIInterfaceOrientation orientation;
 
-// Get the singleton
+/// Get the singleton
 + (Chartboost *)sharedChartboost;
 
-// Start the Chartboost session
+/// Start the Chartboost session
 - (void)startSession;
 
-// Cache an interstitial, optionally takes a location argument
+/// Cache an interstitial
 - (void)cacheInterstitial;
+
+/// Cache an interstitial taking a location argument
 - (void)cacheInterstitial:(NSString *)location;
 
-// Show an interstitial, optionally takes a location and/or a view argument
+/// Show an interstitial
 - (void)showInterstitial;
+
+/// Show an interstitial taking location and/or a view argument
 - (void)showInterstitial:(NSString *)location;
 
-// Implement this to check if an interstitial is stored in cache for the default location  	
+/// Implement this to check if an interstitial is stored in cache for the default location
 - (BOOL)hasCachedInterstitial;
 
-// Implement this to check if an interstitial is stored in cache for a specific location
+/// Implement this to check if an interstitial is stored in cache for a specific location
 - (BOOL)hasCachedInterstitial:(NSString *)location;
 
-// Cache the More Apps page
+/// Cache the More Apps page
 - (void)cacheMoreApps;
 
-// Show the More Apps page
+/// Show the More Apps page
 - (void)showMoreApps;
 
-// Implement this to check if the more apps page is stored in the cache
+/// Implement this to check if the more apps page is stored in the cache
 - (BOOL)hasCachedMoreApps;
 
-// Dismiss any Chartboost view programatically
+/// Dismiss any Chartboost view programatically
 - (void)dismissChartboostView;
 
 @end
@@ -73,58 +77,58 @@
 
 
 
-// Called before requesting an interestitial from the back-end
+/// Called before requesting an interestitial from the back-end
 - (BOOL)shouldRequestInterstitial:(NSString *)location;
 
-// Called when an interstitial has been received, before it is presented on screen
-// Return NO if showing an interstitial is currently innapropriate, for example if the user has entered the main game mode.
+/// Called when an interstitial has been received, before it is presented on screen
+/// Return NO if showing an interstitial is currently innapropriate, for example if the user has entered the main game mode.
 - (BOOL)shouldDisplayInterstitial:(NSString *)location;
 
-// Called when an interstitial has been received and cached.
+/// Called when an interstitial has been received and cached.
 - (void)didCacheInterstitial:(NSString *)location;
 
-// Called when an interstitial has failed to come back from the server
+/// Called when an interstitial has failed to come back from the server
 - (void)didFailToLoadInterstitial:(NSString *)location;
 
-// Called when the user dismisses the interstitial
-// If you are displaying the add yourself, dismiss it now.
+/// Called when the user dismisses the interstitial
+/// If you are displaying the add yourself, dismiss it now.
 - (void)didDismissInterstitial:(NSString *)location;
 
-// Same as above, but only called when dismissed for a close
+/// Same as above, but only called when dismissed for a close
 - (void)didCloseInterstitial:(NSString *)location;
 
-// Same as above, but only called when dismissed for a click
+/// Same as above, but only called when dismissed for a click
 - (void)didClickInterstitial:(NSString *)location;
 
 
-// Called before requesting the more apps view from the back-end
-// Return NO if when showing the loading view is not the desired user experience.
+/// Called before requesting the more apps view from the back-end
+/// Return NO if when showing the loading view is not the desired user experience.
 - (BOOL)shouldDisplayLoadingViewForMoreApps;
 
-// Called when an more apps page has been received, before it is presented on screen
-// Return NO if showing the more apps page is currently innapropriate
+/// Called when an more apps page has been received, before it is presented on screen
+/// Return NO if showing the more apps page is currently innapropriate
 - (BOOL)shouldDisplayMoreApps;
 
-// Called when the More Apps page has been received and cached
+/// Called when the More Apps page has been received and cached
 - (void)didCacheMoreApps;
 
-// Called when a more apps page has failed to come back from the server
+/// Called when a more apps page has failed to come back from the server
 - (void)didFailToLoadMoreApps;
 
-// Called when the user dismisses the more apps view
-// If you are displaying the add yourself, dismiss it now.
+/// Called when the user dismisses the more apps view
+/// If you are displaying the add yourself, dismiss it now.
 - (void)didDismissMoreApps;
 
-// Same as above, but only called when dismissed for a close
+/// Same as above, but only called when dismissed for a close
 - (void)didCloseMoreApps;
 
-// Same as above, but only called when dismissed for a click
+/// Same as above, but only called when dismissed for a click
 - (void)didClickMoreApps;
 
 
 
-// Whether Chartboost should show ads in the first session
-// Defaults to YES
+/// Whether Chartboost should show ads in the first session
+/// Defaults to YES
 - (BOOL)shouldRequestInterstitialsInFirstSession;
 
 
