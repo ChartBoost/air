@@ -1,0 +1,26 @@
+<extension xmlns="http://ns.adobe.com/air/extension/3.1">
+	<id>com.chartboost.plugin.air</id>
+	<versionNumber>0.8</versionNumber>
+	<platforms>
+		<platform name="Android-ARM">
+			<applicationDeployment>
+				<nativeLibrary>libChartboostAir.jar</nativeLibrary>
+				<initializer>com.chartboost.plugin.air.ChartboostExtension</initializer>
+				<finalizer>com.chartboost.plugin.air.ChartboostExtension</finalizer>
+			</applicationDeployment>
+		</platform>
+		
+		<platform name="iPhone-ARM">
+			<applicationDeployment>
+				<nativeLibrary>libChartboostAir.a</nativeLibrary>
+				<initializer>ChartboostExtInitializer</initializer>
+				<finalizer>ChartboostExtFinalizer</finalizer>
+			</applicationDeployment>
+		</platform>
+        
+        <platform name="default">
+            <applicationDeployment/>
+        </platform>
+		
+	</platforms>
+</extension>
