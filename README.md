@@ -17,6 +17,9 @@ Second, make sure you add the `<extensionID>` declaration to your AIR applicatio
 	<extensionID>com.chartboost.plugin.air</extensionID>
 </extensions>
 ```
+##### Details for iOS
+
+Please note that Chartboost only supports iOS 6 and higher.
 
 ##### Details for Android
 
