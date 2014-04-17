@@ -19,7 +19,7 @@ Second, make sure you add the `<extensionID>` declaration to your AIR applicatio
 ```
 ##### Details for iOS
 
-Please note that Chartboost only supports iOS 6 and higher.
+Please note that this Chartboost ANE only supports iOS 6 and higher. Chartboost methods will fail silently on iOS 5 or lower.
 
 ##### Details for Android
 
