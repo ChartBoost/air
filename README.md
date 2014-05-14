@@ -2,7 +2,10 @@
 
 Use the Chartboost plugin for Adobe AIR to add many features to your mobile games including displaying interstitials and more apps pages.
 
-**Note** - The Chartboost Adobe AIR plugin is currently in Beta
+**Notes**
+
+- The Chartboost Adobe AIR plugin is currently in beta
+- The plugin uses [iOS SDK v3.3.1](https://help.chartboost.com/downloads/ios) and [Android SDK v3.4.0](https://help.chartboost.com/downloads/android)
 
 ### Getting Started
 
