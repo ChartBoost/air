@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
-  <includeClasses/>
+<flexLibProperties includeAllClasses="false" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="com.adobe.serialization.json.JSONDecoder"/>
+    <classEntry path="com.adobe.serialization.json.JSONEncoder"/>
+    <classEntry path="com.adobe.serialization.json.JSONParseError"/>
+    <classEntry path="com.adobe.serialization.json.JSONToken"/>
+    <classEntry path="com.adobe.serialization.json.JSONTokenType"/>
+    <classEntry path="com.adobe.serialization.json.JSONTokenizer"/>
+    <classEntry path="com.adobe.serialization.json.Json"/>
+    <classEntry path="com.chartboost.plugin.air.Base64"/>
+    <classEntry path="com.chartboost.plugin.air.CBClickError"/>
+    <classEntry path="com.chartboost.plugin.air.CBInPlay"/>
+    <classEntry path="com.chartboost.plugin.air.CBLoadError"/>
+    <classEntry path="com.chartboost.plugin.air.CBLocation"/>
+    <classEntry path="com.chartboost.plugin.air.CBUtils"/>
+    <classEntry path="com.chartboost.plugin.air.Chartboost"/>
+    <classEntry path="com.chartboost.plugin.air.ChartboostDelegate"/>
+    <classEntry path="com.chartboost.plugin.air.ChartboostEvent"/>
+  </includeClasses>
   <includeResources/>
   <namespaceManifests/>
 </flexLibProperties>

@@ -1,0 +1,42 @@
+# android
+*.apk
+*.ap_
+*.dex
+*.class
+/native_android/gen
+/native_android/lib
+
+# iOS
+*/[Bb]uild/
+xcshareddata
+xcuserdata
+
+# actionscript
+/sample/bin-*
+/sample/release
+/sample/ext
+
+# airsdk
+/air
+
+# gitignore
+.history
+[Tt]humbs.db
+*.DS_Store
+*.bak*
+.svn
+*.orig
+*/bin
+*/.settings
+
+# output
+bin/android
+bin/ios
+bin/default
+bin-no-gps/android
+bin-no-gps/ios
+bin-no-gps/default
+
+# certificates
+/build/chartboost-ios.mobileprovision
+/build/chartboost-ios-*.p12

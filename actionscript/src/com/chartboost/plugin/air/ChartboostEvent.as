@@ -1,72 +1,206 @@
-package com.chartboost.plugin.air {
+﻿package com.chartboost.plugin.air {
+	
+	import com.adobe.serialization.json.Json;
 	
 	import flash.events.Event;
 	import flash.events.StatusEvent;
 	
 	public class ChartboostEvent extends Event {
 		
-		/** Fired when an interstitial fails to load. */
-		public static const INTERSTITIAL_FAILED:String = "didFailToLoadInterstitial";
+		/** Fired when an interstitial fails to load.<br>
+		 * Arguments: <code>(location:String, error:CBLoadError)</code> */
+		public static const DID_FAIL_TO_LOAD_INTERSTITIAL:String = "didFailToLoadInterstitial";
+		
+		/** Fired when an interstitial is to display. Return whether or not it should.<br>
+		 * Arguments: <code>(location:String)</code><br>
+		 * Returns: <code>Boolean</code> */
+		public static const SHOULD_DISPLAY_INTERSTITIAL:String = "shouldDisplayInterstitial";
 		
 		/** Fired when an interstitial is finished via any method.
-		  * This will always be paired with either a close or click event. */
-		public static const INTERSTITIAL_CLICKED:String = "didClickInterstitial";
+		  * This will always be paired with either a close or click event.<br>
+		 * Arguments: <code>(location:String)</code> */
+		public static const DID_CLICK_INTERSTITIAL:String = "didClickInterstitial";
 		
 		/** Fired when an interstitial is closed
-		  * (i.e. by tapping the X or hitting the Android back button). */
-		public static const INTERSTITIAL_CLOSED:String = "didCloseInterstitial";
+		  * (i.e. by tapping the X or hitting the Android back button).<br>
+		 * Arguments: <code>(location:String)</code> */
+		public static const DID_CLOSE_INTERSTITIAL:String = "didCloseInterstitial";
 		
-		/** Fired when an interstitial is clicked. */
-		public static const INTERSTITIAL_DISMISSED:String = "didDismissInterstitial";		
+		/** Fired when an interstitial is clicked.<br>
+		 * Arguments: <code>(location:String)</code> */
+		public static const DID_DISMISS_INTERSTITIAL:String = "didDismissInterstitial";		
 
-		/** Fired when an interstitial is cached. */
-		public static const INTERSTITIAL_CACHED:String = "didCacheInterstitial";
+		/** Fired when an interstitial is cached.<br>
+		 * Arguments: <code>(location:String)</code> */
+		public static const DID_CACHE_INTERSTITIAL:String = "didCacheInterstitial";
 		
-		/** Fired when an interstitial is shown. */
-		public static const INTERSTITIAL_SHOWED:String = "didShowInterstitial";
+		/** Fired when an interstitial is shown.<br>
+		 * Arguments: <code>(location:String)</code> */
+		public static const DID_DISPLAY_INTERSTITIAL:String = "didDisplayInterstitial";
 		
-		/** Fired when the more apps screen fails to load. */
-		public static const MOREAPPS_FAILED:String = "didFailToLoadMoreApps";
+		/** Fired when the more apps screen fails to load.<br>
+		 * Arguments: <code>(location:String, error:CBLoadError)</code> */
+		public static const DID_FAIL_TO_LOAD_MOREAPPS:String = "didFailToLoadMoreApps";
+		
+		/** Fired when the more apps screen is to display. Return whether or not it should.<br>
+		 * Arguments: <code>(location:String)</code> */
+		public static const SHOULD_DISPLAY_MOREAPPS:String = "shouldDisplayMoreApps";
 		
 		/** Fired when the more apps screen is finished via any method.
-		  * This will always be paired with either a close or click event. */
-		public static const MOREAPPS_CLICKED:String = "didClickMoreApps";
+		  * This will always be paired with either a close or click event.<br>
+		 * Arguments: <code>(location:String)</code><br>
+		 * Returns: <code>Boolean</code> */
+		public static const DID_CLICK_MORE_APPS:String = "didClickMoreApps";
 		
 		/** Fired when the more apps screen is closed
-		  * (i.e. by tapping the X or hitting the Android back button). */
-		public static const MOREAPPS_CLOSED:String = "didCloseMoreApps";
+		  * (i.e. by tapping the X or hitting the Android back button).<br>
+		 * Arguments: <code>(location:String)</code> */
+		public static const DID_CLOSE_MORE_APPS:String = "didCloseMoreApps";
 		
-		/** Fired when a listing on the more apps screen is clicked. */
-		public static const MOREAPPS_DISMISSED:String = "didDismissMoreApps";
+		/** Fired when a listing on the more apps screen is clicked.<br>
+		 * Arguments: <code>(location:String)</code> */
+		public static const DID_DISMISS_MORE_APPS:String = "didDismissMoreApps";
 		
-		/** Fired when the more apps screen is cached. */
-		public static const MOREAPPS_CACHED:String = "didCacheMoreApps";
+		/** Fired when the more apps screen is cached.<br>
+		 * Arguments: <code>(location:String)</code> */
+		public static const DID_CACHE_MORE_APPS:String = "didCacheMoreApps";
 		
-		/** Fired when the more app screen is shown. */
-		public static const MOREAPPS_SHOWED:String = "didShowMoreApps";
+		/** Fired when the more app screen is shown.<br>
+		 * Arguments: <code>(location:String)</code> */
+		public static const DID_DISPLAY_MORE_APPS:String = "didDisplayMoreApps";
 		
-		public static const EVENT_NAMES:Array = new Array(
-			INTERSTITIAL_FAILED, INTERSTITIAL_CLICKED, INTERSTITIAL_CLOSED,
-			INTERSTITIAL_DISMISSED, INTERSTITIAL_CACHED, INTERSTITIAL_SHOWED,
-			MOREAPPS_FAILED, MOREAPPS_CLICKED, MOREAPPS_CLOSED,
-			MOREAPPS_DISMISSED, MOREAPPS_CACHED, MOREAPPS_SHOWED);
+		/** Fired after a click is registered, but the user is not forwarded to the IOS App Store.<br>
+		 * Arguments: <code>(location:String, error:CBClickError)</code> */
+		public static const DID_FAIL_TO_RECORD_CLICK:String = "didFailToRecordClick";
+		
+		/** Fired when a rewarded video is cached.<br>
+		 * Arguments: <code>(location:String)</code> */
+		public static const DID_CACHE_REWARDED_VIDEO:String = "didCacheRewardedVideo";
+		
+		/** Fired when a rewarded video is clicked.<br>
+		 * Arguments: <code>(location:String)</code> */
+		public static const DID_CLICK_REWARDED_VIDEO:String = "didClickRewardedVideo";
+		
+		/** Fired when a rewarded video is closed.<br>
+		 * Arguments: <code>(location:String)</code> */
+		public static const DID_CLOSE_REWARDED_VIDEO:String = "didCloseRewardedVideo";
+		
+		/** Fired when a rewarded video completes.<br>
+		 * Arguments: <code>(location:String, reward:int)</code> */
+		public static const DID_COMPLETE_REWARDED_VIDEO:String = "didCompleteRewardedVideo";
+		
+		/** Fired when a rewarded video is dismissed.<br>
+		 * Arguments: <code>(location:String)</code> */
+		public static const DID_DISMISS_REWARDED_VIDEO:String = "didDismissRewardedVideo";
+		
+		/** Fired when a rewarded video fails to load.<br>
+		 * Arguments: <code>(location:String, error:CBLoadError)</code> */
+		public static const DID_FAIL_TO_LOAD_REWARDED_VIDEO:String = "didFailToLoadRewardedVideo";
+		
+		/** Fired when a rewarded video is to display. Return whether or not it should.<br>
+		 * Arguments: <code>(location:String)</code><br>
+		 * Returns: <code>Boolean</code> */
+		public static const SHOULD_DISPLAY_REWARDED_VIDEO:String = "shouldDisplayRewardedVideo";
+		
+		/** Fired right after a rewarded video is displayed.<br>
+		 * Arguments: <code>(location:String)</code> */
+		public static const DID_DISPLAY_REWARDED_VIDEO:String = "didDisplayRewardedVideo";
+		
+		/** Fired when a rewarded video is cached.<br>
+		 * Arguments: <code>(location:String)</code>
+		public static const DID_CACHE_INPLAY:String = "didCacheInPlay"; */
+		
+		/** Fired when a rewarded video is cached.<br>
+		 * Arguments: <code>(location:String, error:CBLoadError)</code>
+		public static const DID_FAIL_TO_LOAD_INPLAY:String = "didFailToLoadInPlay"; */
+		
+		/** Fired when a video is about to be displayed.<br>
+		 * Arguments: <code>(location:String)</code> */
+		public static const WILL_DISPLAY_VIDEO:String = "willDisplayVideo";
+		
+		/** Fired if Chartboost SDK pauses click actions awaiting confirmation from the user.<br>
+		 * Arguments: <code>None</code> */
+		public static const DID_PAUSE_CLICK_FOR_COMFIRMATION:String = "didPauseClickForConfirmation";
+		
+		/** iOS only: Fired when the App Store sheet is dismissed, when displaying the embedded app sheet.<br>
+		 * Arguments: <code>None</code> */
+		public static const DID_COMPLETE_APP_STORE_SHEET_FLOW:String = "didCompleteAppStoreSheetFlow";
+		
+		private static const EVENT_NAMES:Array = new Array(
+			DID_FAIL_TO_LOAD_INTERSTITIAL, SHOULD_DISPLAY_INTERSTITIAL, DID_CLICK_INTERSTITIAL, DID_CLOSE_INTERSTITIAL,
+			DID_DISMISS_INTERSTITIAL, DID_CACHE_INTERSTITIAL, DID_DISPLAY_INTERSTITIAL,
+			DID_FAIL_TO_LOAD_MOREAPPS, SHOULD_DISPLAY_MOREAPPS, DID_CLICK_MORE_APPS, DID_CLOSE_MORE_APPS,
+			DID_DISMISS_MORE_APPS, DID_CACHE_MORE_APPS, DID_DISPLAY_MORE_APPS,
+			DID_FAIL_TO_RECORD_CLICK, DID_CACHE_REWARDED_VIDEO, DID_CLICK_REWARDED_VIDEO, 
+			DID_CLOSE_REWARDED_VIDEO, DID_COMPLETE_REWARDED_VIDEO, DID_DISMISS_REWARDED_VIDEO,
+			DID_FAIL_TO_LOAD_REWARDED_VIDEO, SHOULD_DISPLAY_REWARDED_VIDEO, DID_DISPLAY_REWARDED_VIDEO, WILL_DISPLAY_VIDEO,
+			DID_PAUSE_CLICK_FOR_COMFIRMATION, DID_COMPLETE_APP_STORE_SHEET_FLOW
+			// DID_CACHE_INPLAY, DID_FAIL_TO_LOAD_INPLAY
+		);
 		
 		// vars
 		public var location:String;
+		public var errorType:int;
+		public var reward:int;
 		
 		public function ChartboostEvent(type:String, location:String) {
 			super(type);
 			this.location = location;
 		}
 		
-		public static function wrap(event:StatusEvent):ChartboostEvent {
-			for (var i:int = 0; i < EVENT_NAMES.length; i++) {
-				var eName:String = EVENT_NAMES[i];
-				if (event.code == eName) {
-					return new ChartboostEvent(event.code, event.level);
-				}
+		public static function runDelegateMethod(event:StatusEvent, fn:Function):void {
+			if (fn == null)
+				return; // not listening
+			
+			var args:Object;
+			switch (event.code) {
+				case ChartboostEvent.DID_CLICK_INTERSTITIAL :
+				case ChartboostEvent.DID_CLOSE_INTERSTITIAL :
+				case ChartboostEvent.DID_DISMISS_INTERSTITIAL :
+				case ChartboostEvent.DID_CACHE_INTERSTITIAL :
+				case ChartboostEvent.DID_DISPLAY_INTERSTITIAL :
+				case ChartboostEvent.DID_CLICK_MORE_APPS :
+				case ChartboostEvent.DID_CLOSE_MORE_APPS :
+				case ChartboostEvent.DID_DISMISS_MORE_APPS :
+				case ChartboostEvent.DID_CACHE_MORE_APPS :
+				case ChartboostEvent.DID_DISPLAY_MORE_APPS :
+				case ChartboostEvent.DID_CACHE_REWARDED_VIDEO :
+				case ChartboostEvent.DID_CLICK_REWARDED_VIDEO :
+				case ChartboostEvent.DID_CLOSE_REWARDED_VIDEO :
+				case ChartboostEvent.DID_DISMISS_REWARDED_VIDEO :
+				case ChartboostEvent.DID_DISPLAY_REWARDED_VIDEO :
+				//case ChartboostEvent.DID_CACHE_INPLAY :
+				case ChartboostEvent.WILL_DISPLAY_VIDEO :
+					fn(event.level);
+					break;
+				case ChartboostEvent.DID_FAIL_TO_LOAD_INTERSTITIAL :
+				case ChartboostEvent.DID_FAIL_TO_LOAD_MOREAPPS :
+				case ChartboostEvent.DID_FAIL_TO_LOAD_REWARDED_VIDEO :
+				//case ChartboostEvent.DID_FAIL_TO_LOAD_INPLAY :
+					args = Json.decode(event.level);
+					fn(args.location, CBLoadError.wrap(args.errorCode));
+				  break;
+				case ChartboostEvent.DID_FAIL_TO_RECORD_CLICK :
+					args = Json.decode(event.level);
+					fn(args.location, CBClickError.wrap(args.errorCode));
+					break;
+				case ChartboostEvent.DID_COMPLETE_REWARDED_VIDEO :
+					args = Json.decode(event.level);
+					fn(args.location, args.reward);
+					break;
+				case ChartboostEvent.DID_PAUSE_CLICK_FOR_COMFIRMATION :
+				case ChartboostEvent.DID_COMPLETE_APP_STORE_SHEET_FLOW :
+					fn();
+				  break;
+				case ChartboostEvent.SHOULD_DISPLAY_INTERSTITIAL:
+				case ChartboostEvent.SHOULD_DISPLAY_MOREAPPS:
+				case ChartboostEvent.SHOULD_DISPLAY_REWARDED_VIDEO:
+				  	// these are dealt with in the caller method in Chartboost.as, onStatus()
+				  	break;
+				default :
+					trace("UNSUPPORTED Chartboost Event onStatus() ", event.type);
+					break;
 			}
-			return null;
 		}
 	}
 }

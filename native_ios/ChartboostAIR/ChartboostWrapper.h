@@ -1,7 +1,10 @@
 // Chartboost AIR iOS native wrapper code
 
 #import <Foundation/Foundation.h>
+#import "Chartboost+AIR.h"
 #import "Chartboost.h"
+#import "CBAnalytics.h"
+#import "CBInPlay.h"
 #import "FlashRuntimeExtensions.h"
 
 #define AirDispatchAsync(_name_) AirDispatchAsyncParam(_name_, @"")
@@ -13,16 +16,53 @@
 	FREContext _airContext;
 }
 
+@property (nonatomic) BOOL shouldPauseClick;
+@property (nonatomic) BOOL shouldRequestFirstSession;
+
+@property (nonatomic, retain) NSString *gameObjectName;
+
 + (ChartboostWrapper*)sharedChartboostWrapper;
 
 - (void)initAirContext:(FREContext)airContext;
-- (void)startChartBoostWithAppId:(NSString*)appId appSignature:(NSString*)appSignature;
+- (void)startWithAppId:(NSString*)appId appSignature:(NSString*)appSignature;
 
+- (BOOL)hasInterstitial:(NSString*)location;
 - (void)cacheInterstitial:(NSString*)location;
 - (void)showInterstitial:(NSString*)location;
-- (void)cacheMoreApps;
-- (void)showMoreApps;
 
-- (void)forceOrientation:(NSString*)orientation;
+- (BOOL)hasMoreApps:(NSString*)location;
+- (void)cacheMoreApps:(NSString*)location;
+- (void)showMoreApps:(NSString*)location;
+
+- (BOOL)hasRewardedVideo:(NSString*)location;
+- (void)cacheRewardedVideo:(NSString*)location;
+- (void)showRewardedVideo:(NSString*)location;
+
+- (void)cacheInPlay:(NSString*)location;
+- (BOOL)hasInPlay:(NSString*)location;
+- (NSString*)getInPlay:(NSString*)location;
+- (void)inPlayClick:(NSString*)ID;
+- (void)inPlayShow:(NSString*)ID;
+- (void)inPlayFreeObject:(NSString*)ID;
+
+- (BOOL)isAnyViewVisible;
+
+- (void)setShouldPauseClickForConfirmation:(BOOL)pause;
+- (void)setShouldRequestInterstitialsInFirstSession:(BOOL)request;
+- (void)setShouldDisplayLoadingViewForMoreApps:(BOOL)shouldDisplay;
+- (void)setShouldPrefetchVideoContent:(BOOL)shouldPrefetch;
+- (void)setCustomId:(NSString*)ID;
+- (NSString*)getCustomId;
+- (void)setAutoCacheAds:(BOOL)autoCacheAds;
+- (BOOL)getAutoCacheAds;
+
+- (void)didPassAgeGate:(BOOL)pass;
+- (void)handleOpenURL:(NSString*)url sourceApp:(NSString*)sourceApp;
+
+- (void)shouldDisplayInterstitialCallbackResult:(NSString*)location show:(BOOL)result;
+- (void)shouldDisplayMoreAppsCallbackResult:(NSString*)location show:(BOOL)result;
+- (void)shouldDisplayRewardedVideoCallbackResult:(NSString*)location show:(BOOL)result;
+
+- (void)trackInAppPurchaseEvent:(NSString*)receipt title:(NSString*)productTitle description:(NSString*)productDescription price:(double)productPrice currency:(NSString*)productCurrency identifier:(NSString*)productIdentifier;
 
 @end

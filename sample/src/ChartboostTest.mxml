@@ -1,67 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+<s:ViewNavigatorApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
 			   xmlns:s="library://ns.adobe.com/flex/spark"
 			   applicationDPI="160"
-			   applicationComplete="init()">
+			   applicationComplete="init()"
+			   firstView="com.chartboost.sample.air.HomeView">
 	<fx:Script>
 		<![CDATA[
-			import com.chartboost.plugin.air.Chartboost;
-			import com.chartboost.plugin.air.ChartboostEvent;
+			import com.chartboost.plugin.air.*;
+			import spark.events.PopUpEvent;
 			
 			private var chartboost:Chartboost;
 			
 			private function init():void {
-				localTrace("Chartboost Actionscript init()");
+				trace("Chartboost Actionscript init()");
 				// init
 				chartboost = Chartboost.getInstance();
 				if (Chartboost.isAndroid()) {
-					localTrace("Chartboost Actionscript Android init()");
-					chartboost.init("4f7aa26ef77659d869000003", "ee759deefd871ff6e2411c7153dbedefa4aabe38");
+					trace("Chartboost Actionscript Android init()");
+					chartboost.init("4f7b433509b6025804000002", "dd2d41b69ac01b80f443f5b6cf06096d457f82bd");
 				} else if (Chartboost.isIOS()) {
-					localTrace("Chartboost Actionscript iOS init()");
+					trace("Chartboost Actionscript iOS init()");
 					chartboost.init("4f21c409cd1cb2fb7000001b", "92e2de2fd7070327bdeb54c15a5295309c6fcd2d");
 				}
+				addDelegateMethods();
+			}
+			
+			private function addDelegateMethods():void {
+				chartboost.addDelegateEvent(ChartboostEvent.DID_FAIL_TO_LOAD_INTERSTITIAL, function (location:String, error:CBLoadError):void {
+					log( "Chartboost: on Interstitial failed to load " + location + " for reason " + error.Text );
+				});
 				
-				// add listeners
-				chartboost.addEventListener(ChartboostEvent.INTERSTITIAL_CACHED, onAdCached);
-				chartboost.addEventListener(ChartboostEvent.INTERSTITIAL_SHOWED, onAdShowed);
-				chartboost.addEventListener(ChartboostEvent.INTERSTITIAL_DISMISSED, onAdDismissed);
-				chartboost.addEventListener(ChartboostEvent.INTERSTITIAL_FAILED, onAdFailed);
+				chartboost.addDelegateEvent(ChartboostEvent.DID_CLICK_INTERSTITIAL, function (location:String):void {
+					log( "Chartboost: on Interstitial clicked: " + location );
+				});
+				
+				chartboost.addDelegateEvent(ChartboostEvent.DID_CLOSE_INTERSTITIAL, function (location:String):void {
+					log( "Chartboost: on Interstitial closed: " + location );
+				});
+				
+				chartboost.addDelegateEvent(ChartboostEvent.DID_DISMISS_INTERSTITIAL, function (location:String):void {
+					log( "Chartboost: on Interstitial dismissed: " + location );
+				});
+				
+				chartboost.addDelegateEvent(ChartboostEvent.DID_CACHE_INTERSTITIAL, function (location:String):void {
+					log( "Chartboost: on Interstitial cached: " + location );
+				});
+				
+				chartboost.addDelegateEvent(ChartboostEvent.DID_DISPLAY_INTERSTITIAL, function (location:String):void {
+					log( "Chartboost: on Interstitial showed: " + location );
+				});
+				
+				chartboost.addDelegateEvent(ChartboostEvent.DID_FAIL_TO_LOAD_MOREAPPS, function (location:String, error:CBLoadError):void {
+					log( "Chartboost: on More Apps failed to load " + location + " for reason " + error.Text );
+				});
+				
+				chartboost.addDelegateEvent(ChartboostEvent.DID_CLICK_MORE_APPS, function (location:String):void {
+					log( "Chartboost: on More Apps clicked: " + location );
+				});
+				
+				chartboost.addDelegateEvent(ChartboostEvent.DID_CLOSE_MORE_APPS, function (location:String):void {
+					log( "Chartboost: on More Apps closed: " + location );
+				});
+				
+				chartboost.addDelegateEvent(ChartboostEvent.DID_DISMISS_MORE_APPS, function (location:String):void {
+					log( "Chartboost: on More Apps dismissed: " + location );
+				});
+				
+				chartboost.addDelegateEvent(ChartboostEvent.DID_CACHE_MORE_APPS, function (location:String):void {
+					log( "Chartboost: on More Apps cached: " + location );
+				});		
+				
+				chartboost.addDelegateEvent(ChartboostEvent.DID_DISPLAY_MORE_APPS, function (location:String):void {
+					log( "Chartboost: on More Apps showed: " + location );
+				});
+				
+				chartboost.addDelegateEvent(ChartboostEvent.DID_FAIL_TO_RECORD_CLICK, function (location:String, error:CBClickError):void {
+					log( "Chartboost: on click failed to record " + location + " for reason " + error.Text );
+				});
+				
+				chartboost.addDelegateEvent(ChartboostEvent.DID_FAIL_TO_LOAD_REWARDED_VIDEO, function (location:String, error:CBLoadError):void {
+					log( "Chartboost: on Rewarded Video failed to load " + location + " for reason " + error.Text );
+				});
+				
+				chartboost.addDelegateEvent(ChartboostEvent.DID_CLICK_REWARDED_VIDEO, function (location:String):void {
+					log( "Chartboost: on Rewarded Video clicked: " + location );
+				});
+				
+				chartboost.addDelegateEvent(ChartboostEvent.DID_CLOSE_REWARDED_VIDEO, function (location:String):void {
+					log( "Chartboost: on Rewarded Video closed: " + location );
+				});
+				
+				chartboost.addDelegateEvent(ChartboostEvent.DID_COMPLETE_REWARDED_VIDEO, function (location:String, reward:int):void {
+					log( "Chartboost: on Rewarded Video completed " + location + " for reward " + reward );
+				});
+				
+				chartboost.addDelegateEvent(ChartboostEvent.DID_CACHE_REWARDED_VIDEO, function (location:String):void {
+					log( "Chartboost: on Rewarded Video cached: " + location );
+				});
+				
+				chartboost.addDelegateEvent(ChartboostEvent.DID_DISMISS_REWARDED_VIDEO, function (location:String):void {
+					log( "Chartboost: on Rewarded Video dismissed: " + location );
+				});
+				
+				chartboost.addDelegateEvent(ChartboostEvent.DID_DISPLAY_REWARDED_VIDEO, function (location:String):void {
+					log( "Chartboost: on Rewarded Video showed: " + location );
+				});
+				
+				chartboost.addDelegateEvent(ChartboostEvent.DID_COMPLETE_APP_STORE_SHEET_FLOW, function ():void {
+					log( "Chartboost: did complete iOS app store sheet flow" );
+				});
+				
+				chartboost.addDelegateEvent(ChartboostEvent.WILL_DISPLAY_VIDEO, function ():void {
+					log( "Chartboost: will display video" );
+				});
 			}
 			
-			private function onAdShowed( event:ChartboostEvent ):void {
-				localTrace( "Chartboost: on Interstitial showed: ", event.location );
-			}
-			
-			private function onAdCached( event:ChartboostEvent ):void {
-				localTrace( "Chartboost: on Interstitial cached: ", event.location );
-			}
-			
-			private function onAdDismissed( event:ChartboostEvent ):void {
-				localTrace( "Chartboost: on Interstitial dismissed: ", event.location );
-			}
-			
-			private function onAdFailed( event:ChartboostEvent ):void {
-				localTrace( "Chartboost: on Interstitial failed to load: ", event.location );
-			}
-			
-			public function localTrace(log:String, log2:String = ""):void {
-				logs.text = logs.text + "\n" + log + " \t" + log2;
+			private function log(txt:String):void {
+				chartboost.nativeLog(txt);
 			}
 			
 		]]>
 	</fx:Script>
 	
-	<s:layout>
-		<s:VerticalLayout/>
-	</s:layout>
-	
-	<s:Button id="showInterstitial" label="Show Interstitial" width="160" click="Chartboost.getInstance().showInterstitial();" />
-	<s:Button id="cacheInterstitial" label="Cache Interstitial" width="160" click="Chartboost.getInstance().cacheInterstitial();" />
-	<s:Button id="hasInterstitialCached" label="Is Interstitial Cached" width="160" click="localTrace('interstitial cached: ', Chartboost.getInstance().hasCachedInterstitial().toString());" />
-	<s:Button id="showMoreApps" label="Show More Apps" width="160" click="Chartboost.getInstance().showMoreApps();" />
-	<s:Button id="cacheMoreApps" label="Cache More Apps" width="160" click="Chartboost.getInstance().cacheMoreApps();" />
-	<s:Button id="hasMoreAppsCached" label="Is More Apps Cached" width="160" click="localTrace('more apps cached: ', Chartboost.getInstance().hasCachedMoreApps().toString());" />
-	
-	<s:TextArea id="logs" heightInLines="10" widthInChars="40" />
-</s:Application>
+</s:ViewNavigatorApplication>

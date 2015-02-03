@@ -1,53 +1,63 @@
 package com.chartboost.plugin.air;
 
+import static com.chartboost.plugin.air.JSONTools.JSON;
+import static com.chartboost.plugin.air.JSONTools.KV;
+
 import java.io.ByteArrayOutputStream;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.os.Handler;
 import android.util.Base64;
 import android.util.Log;
+import android.util.SparseArray;
 
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREFunction;
 import com.chartboost.sdk.Chartboost;
-import com.chartboost.sdk.ChartboostDelegate;
 import com.chartboost.sdk.Chartboost.CBFramework;
+import com.chartboost.sdk.ChartboostDelegate;
 import com.chartboost.sdk.InPlay.CBInPlay;
 import com.chartboost.sdk.Libraries.CBLogging.Level;
+import com.chartboost.sdk.Libraries.CBUtility;
 import com.chartboost.sdk.Model.CBError.CBClickError;
 import com.chartboost.sdk.Model.CBError.CBImpressionError;
 import com.chartboost.sdk.Tracking.CBAnalytics;
 
 public class ChartboostContext extends FREContext {
+
+	// private static final String TAG = "CBAirAndroidPlugin";
+	
+	private static final String KEY_LOCATION = "location";
+	private static final String KEY_ERROR_LOAD = "errorCode";
+	private static final String KEY_ERROR_CLICK = "errorCode";
+	private static final String KEY_REWARD = "reward";
     
     private List<ChartboostFunction<?>> methods;
 
-	private boolean suppressNextActivate;
 	private boolean isChartboostInitialized = false;
 	
-	// These variables are used by the ChartboostDelegate methods
-	private Boolean airResponseShouldDisplayInterstitial,
-			airResponseShouldDisplayMoreApps,
-			airResponseShouldDisplayRewardedVideo;
+	private SparseArray<CBInPlay> inPlayObjects = new SparseArray<CBInPlay>();
 
     public ChartboostContext() {
-    	suppressNextActivate = false;
         methods = new ArrayList<ChartboostFunction<?>>();
+        Log.e("ChartboostAIR", "ChartboostContext.<init>()");
 
-        /*methods.add(new ChartboostFunction<Void>("init", String.class, String.class) {
+        methods.add(new ChartboostFunction<Void>("init", String.class, String.class) {
             public Void onCall(ChartboostContext context, Object[] args) {
                 init((String)args[0], (String)args[1]);
                 return null;
             }
-        });*/
+        });
 
         methods.add(new ChartboostFunction<Void>("onActivate") {
             public Void onCall(ChartboostContext context, Object[] args) {
@@ -63,11 +73,11 @@ public class ChartboostContext extends FREContext {
             }
         });
 
-        /*methods.add(new ChartboostFunction<Boolean>("onBackPressed") {
+        methods.add(new ChartboostFunction<Boolean>("onBackPressed") {
             public Boolean onCall(ChartboostContext context, Object[] args) {
                 return onBackPressed();
             }
-        });*/
+        });
 
         methods.add(new ChartboostFunction<Void>("cacheInterstitial", String.class) {
             public Void onCall(ChartboostContext context, Object[] args) {
@@ -108,10 +118,175 @@ public class ChartboostContext extends FREContext {
                 return hasMoreApps((String)args[0]);
             }
         });
+        
+        methods.add(new ChartboostFunction<Void>("cacheRewardedVideo", String.class) {
+            public Void onCall(ChartboostContext context, Object[] args) {
+                cacheRewardedVideo((String)args[0]);
+                return null;
+            }
+        });
+        
+        methods.add(new ChartboostFunction<Void>("showRewardedVideo", String.class) {
+            public Void onCall(ChartboostContext context, Object[] args) {
+                showRewardedVideo((String)args[0]);
+                return null;
+            }
+        });
+        
+        methods.add(new ChartboostFunction<Boolean>("hasRewardedVideo", String.class) {
+            public Boolean onCall(ChartboostContext context, Object[] args) {
+                return hasRewardedVideo((String)args[0]);
+            }
+        });
+        
+        methods.add(new ChartboostFunction<Void>("cacheInPlay", String.class) {
+            public Void onCall(ChartboostContext context, Object[] args) {
+                cacheInPlay((String)args[0]);
+                return null;
+            }
+        });
+        
+        methods.add(new ChartboostFunction<String>("getInPlay", String.class) {
+            public String onCall(ChartboostContext context, Object[] args) {
+                return getInPlay((String)args[0]);
+            }
+        });
+        
+        methods.add(new ChartboostFunction<Boolean>("hasInPlay", String.class) {
+            public Boolean onCall(ChartboostContext context, Object[] args) {
+                return hasInPlay((String)args[0]);
+            }
+        });
+        
+        methods.add(new ChartboostFunction<Void>("inPlayShow", String.class) {
+            public Void onCall(ChartboostContext context, Object[] args) {
+                inPlayShow((String)args[0]);
+                return null;
+            }
+        });
+        
+        methods.add(new ChartboostFunction<Void>("inPlayClick", String.class) {
+            public Void onCall(ChartboostContext context, Object[] args) {
+                inPlayClick((String)args[0]);
+                return null;
+            }
+        });
+        
+        methods.add(new ChartboostFunction<Void>("shouldDisplayInterstitialCallbackResult", String.class, Boolean.class) {
+            public Void onCall(ChartboostContext context, Object[] args) {
+                shouldDisplayInterstitialCallbackResult((String)args[0], (Boolean)args[1]);
+                return null;
+            }
+        });
+        
+        methods.add(new ChartboostFunction<Void>("shouldDisplayMoreAppsCallbackResult", String.class, Boolean.class) {
+            public Void onCall(ChartboostContext context, Object[] args) {
+            	shouldDisplayMoreAppsCallbackResult((String)args[0], (Boolean)args[1]);
+                return null;
+            }
+        });
+        
+        methods.add(new ChartboostFunction<Void>("shouldDisplayRewardedVideoCallbackResult", String.class, Boolean.class) {
+            public Void onCall(ChartboostContext context, Object[] args) {
+            	shouldDisplayRewardedVideoCallbackResult((String)args[0], (Boolean)args[1]);
+                return null;
+            }
+        });
+        
+        methods.add(new ChartboostFunction<Void>("didPassAgeGate", Boolean.class) {
+            public Void onCall(ChartboostContext context, Object[] args) {
+                didPassAgeGate((Boolean)args[0]);
+                return null;
+            }
+        });
+        
+        methods.add(new ChartboostFunction<Void>("setShouldPauseClickForConfirmation", Boolean.class) {
+            public Void onCall(ChartboostContext context, Object[] args) {
+            	setShouldPauseClickForConfirmation((Boolean)args[0]);
+                return null;
+            }
+        });
+        
+        methods.add(new ChartboostFunction<Void>("didPassAgeGate", Boolean.class) {
+            public Void onCall(ChartboostContext context, Object[] args) {
+                didPassAgeGate((Boolean)args[0]);
+                return null;
+            }
+        });
+        
+        methods.add(new ChartboostFunction<String>("getCustomId") {
+            public String onCall(ChartboostContext context, Object[] args) {
+                return getCustomId();
+            }
+        });
+        
+        methods.add(new ChartboostFunction<Void>("setCustomId", String.class) {
+            public Void onCall(ChartboostContext context, Object[] args) {
+                setCustomId((String)args[0]);
+                return null;
+            }
+        });
+        
+        methods.add(new ChartboostFunction<Boolean>("getAutoCacheAds") {
+            public Boolean onCall(ChartboostContext context, Object[] args) {
+                return getAutoCacheAds();
+            }
+        });
+        
+        methods.add(new ChartboostFunction<Void>("setAutoCacheAds", Boolean.class) {
+            public Void onCall(ChartboostContext context, Object[] args) {
+            	setAutoCacheAds((Boolean)args[0]);
+                return null;
+            }
+        });
+        
+        methods.add(new ChartboostFunction<Void>("setShouldRequestInterstitialsInFirstSession", Boolean.class) {
+            public Void onCall(ChartboostContext context, Object[] args) {
+            	setShouldRequestInterstitialsInFirstSession((Boolean)args[0]);
+                return null;
+            }
+        });
+        
+        methods.add(new ChartboostFunction<Void>("setShouldDisplayLoadingViewForMoreApps", Boolean.class) {
+            public Void onCall(ChartboostContext context, Object[] args) {
+                setShouldDisplayLoadingViewForMoreApps((Boolean)args[0]);
+                return null;
+            }
+        });
+        
+        methods.add(new ChartboostFunction<Void>("setShouldPrefetchVideoContent", Boolean.class) {
+            public Void onCall(ChartboostContext context, Object[] args) {
+                setShouldPrefetchVideoContent((Boolean)args[0]);
+                return null;
+            }
+        });
+        
+        methods.add(new ChartboostFunction<Void>("trackInAppGooglePlayPurchaseEvent", String.class, String.class, String.class, String.class, String.class, String.class, String.class) {
+            public Void onCall(ChartboostContext context, Object[] args) {
+                trackInAppGooglePlayPurchaseEvent((String)args[0], (String)args[1], (String)args[2], (String)args[3], (String)args[4], (String)args[5], (String)args[6]);
+                return null;
+            }
+        });
+        
+        methods.add(new ChartboostFunction<Void>("trackInAppAmazonStorePurchaseEvent", String.class, String.class, String.class, String.class, String.class, String.class, String.class) {
+            public Void onCall(ChartboostContext context, Object[] args) {
+                trackInAppAmazonStorePurchaseEvent((String)args[0], (String)args[1], (String)args[2], (String)args[3], (String)args[4], (String)args[5], (String)args[6]);
+                return null;
+            }
+        });
+        
+        methods.add(new ChartboostFunction<Void>("nativeLog", String.class) {
+            public Void onCall(ChartboostContext context, Object[] args) {
+                Log.e("ChartboostAIR", (String)args[0]);
+                return null;
+            }
+        });
     }
 
     @Override
     public void dispose() {
+        Log.e("ChartboostAIR", "ChartboostContext.dispose()");
+    	Chartboost.onPause(getActivity());
         Chartboost.onStop(getActivity());
         Chartboost.onDestroy(getActivity());
     }
@@ -126,28 +301,30 @@ public class ChartboostContext extends FREContext {
     }
     
     
+    
+    
     // chartboost actions
+    private Handler handler = new Handler();
     
     public void init(final String appId, final String appSignature) {
-    	Chartboost.startWithAppId(getActivity(), appId, appSignature);
-		Chartboost.setFramework(CBFramework.CBFrameworkUnity);
-		Chartboost.setLoggingLevel(Level.ALL);
-		Chartboost.setDelegate(delegate);
-		Chartboost.onCreate(getActivity());
-		Chartboost.onStart(getActivity());
-		isChartboostInitialized = true;
-        
-        /*// only call start session on a REAL activate
-        // we do this because activate is triggered whenever we close an impression,
-        // and that is not a situation that should trigger a new user session
-        if (this.suppressNextActivate)
-        	this.suppressNextActivate = false;
-        else
-        	Chartboost.startSession();
-        */
+    	handler.post(new Runnable() {
+    		public void run() {
+		        Log.e("ChartboostAIR", "ChartboostContext.init()");
+		        Chartboost.startWithAppId(getActivity(), appId, appSignature);
+				Chartboost.setFramework(CBFramework.CBFrameworkAir);
+		    	Chartboost.setImpressionsUseActivities(true);
+				Chartboost.setLoggingLevel(Level.ALL);
+				Chartboost.setDelegate(delegate);
+				Chartboost.onCreate(getActivity());
+				Chartboost.onStart(getActivity());
+				Chartboost.onResume(getActivity());
+				isChartboostInitialized = true;
+    		}
+    	});
     }
     
     public void onActivate() {
+        Log.e("ChartboostAIR", "ChartboostContext.onActivate()");
         ApplicationInfo ai;
         String appId = null;
         String appSignature = null;
@@ -167,48 +344,31 @@ public class ChartboostContext extends FREContext {
     }
     
     public void onDeactivate() {
-        Chartboost.onStop(getActivity());
-        Chartboost.onDestroy(getActivity());
+    	final Activity activity = getActivity();
+    	activity.runOnUiThread(new Runnable() {
+    		public void run() {
+    	        Log.e("ChartboostAIR", "ChartboostContext.onDeactivate()");
+    	        Chartboost.onPause(activity);
+    	        Chartboost.onStop(activity);
+    	        Chartboost.onDestroy(activity);
+    		}
+    	});
     }
-
-	public void suppressNextActivate() {
-		this.suppressNextActivate = true;
-	}
-
-	/* unused -- currently we just get the back button press from the CBImpressionActivity,
-	 * since we couldn't reliably get it in AIR. if things ever change this may be useful.
-    public boolean onBackPressed() {
-        if (_chartboost == null)
-            return false;
-
-        // we need to be able to call Chartboost.onBackPressed and immediately return a value
-        // since we are not on the UI thread, this would normally throw an exception
-        boolean ignoreErrors = _chartboost.getIgnoreErrors();
-        _chartboost.setIgnoreErrors(true);
-        
-        boolean handled = false;
-        if (_chartboost.onBackPressed())
-            handled = true;
-        
-        _chartboost.setIgnoreErrors(ignoreErrors);
-        return handled;
-    } */
     
 	public void cacheInterstitial(final String location) {
-		if (isChartboostInitialized == false || location == null
+		if (!isChartboostInitialized || location == null
 				|| location.length() < 0)
 			return;
 
 		getActivity().runOnUiThread(new Runnable() {
 			public void run() {
-				Log.d("CBPlugin", "cacheInterstitial");
 				Chartboost.cacheInterstitial(location);
 			}
 		});
 	}
 
-	public boolean hasInterstitial(final String location) {
-		if (isChartboostInitialized == false || location == null
+	public Boolean hasInterstitial(final String location) {
+		if (!isChartboostInitialized || location == null
 				|| location.length() < 0)
 			return false;
 
@@ -216,33 +376,31 @@ public class ChartboostContext extends FREContext {
 	}
 
 	public void showInterstitial(final String location) {
-		if (isChartboostInitialized == false || location == null
+		if (!isChartboostInitialized || location == null
 				|| location.length() < 0)
 			return;
 
 		getActivity().runOnUiThread(new Runnable() {
 			public void run() {
-				Log.d("CBPlugin", "showInterstitial");
 				Chartboost.showInterstitial(location);
 			}
 		});
 	}
 
 	public void cacheMoreApps(final String location) {
-		if (isChartboostInitialized == false || location == null
+		if (!isChartboostInitialized || location == null
 				|| location.length() < 0)
 			return;
 
 		getActivity().runOnUiThread(new Runnable() {
 			public void run() {
-				Log.d("CBPlugin", "cacheMoreApps");
 				Chartboost.cacheMoreApps(location);
 			}
 		});
 	}
 
-	public boolean hasMoreApps(final String location) {
-		if (isChartboostInitialized == false || location == null
+	public Boolean hasMoreApps(final String location) {
+		if (!isChartboostInitialized || location == null
 				|| location.length() < 0)
 			return false;
 
@@ -250,33 +408,31 @@ public class ChartboostContext extends FREContext {
 	}
 
 	public void showMoreApps(final String location) {
-		if (isChartboostInitialized == false || location == null
+		if (!isChartboostInitialized || location == null
 				|| location.length() < 0)
 			return;
 
 		getActivity().runOnUiThread(new Runnable() {
 			public void run() {
-				Log.d("CBPlugin", "showMoreApps");
 				Chartboost.showMoreApps(location);
 			}
 		});
 	}
 
 	public void cacheRewardedVideo(final String location) {
-		if (isChartboostInitialized == false || location == null
+		if (!isChartboostInitialized || location == null
 				|| location.length() < 0)
 			return;
 
 		getActivity().runOnUiThread(new Runnable() {
 			public void run() {
-				Log.d("CBPlugin", "cacheRewardedVideo");
 				Chartboost.cacheRewardedVideo(location);
 			}
 		});
 	}
 
-	public boolean hasRewardedVideo(final String location) {
-		if (isChartboostInitialized == false || location == null
+	public Boolean hasRewardedVideo(final String location) {
+		if (!isChartboostInitialized || location == null
 				|| location.length() < 0)
 			return false;
 
@@ -284,20 +440,19 @@ public class ChartboostContext extends FREContext {
 	}
 
 	public void showRewardedVideo(final String location) {
-		if (isChartboostInitialized == false || location == null
+		if (!isChartboostInitialized || location == null
 				|| location.length() < 0)
 			return;
 
 		getActivity().runOnUiThread(new Runnable() {
 			public void run() {
-				Log.d("CBPlugin", "showRewardedVideo");
 				Chartboost.showRewardedVideo(location);
 			}
 		});
 	}
 
 	public void cacheInPlay(final String location) {
-		if (isChartboostInitialized == false || location == null
+		if (!isChartboostInitialized || location == null
 				|| location.length() < 0)
 			return;
 
@@ -308,23 +463,32 @@ public class ChartboostContext extends FREContext {
 		});
 	}
 
-	public boolean hasCachedInPlay(final String location) {
-		if (isChartboostInitialized == false || location == null
+	public Boolean hasInPlay(final String location) {
+		if (!isChartboostInitialized || location == null
 				|| location.length() < 0)
 			return false;
 
 		return CBInPlay.hasInPlay(location);
 	}
 
-	public CBInPlay getInPlay(final String location) {
-		if (isChartboostInitialized == false || location == null
+	public String getInPlay(final String location) {
+		if (!isChartboostInitialized || location == null
 				|| location.length() < 0)
 			return null;
 
-		return CBInPlay.getInPlay(location);
+		CBInPlay inPlay = CBInPlay.getInPlay(location);
+		if (inPlay == null)
+			return null;
+		
+		if (inPlayObjects.get(inPlay.hashCode()) == null)
+			inPlayObjects.put(inPlay.hashCode(), inPlay);
+		
+		return JSON(KV("ID", ""+inPlay.hashCode()),
+				KV("name", inPlay.getAppName()),
+				KV("icon", getBitmapAsString(inPlay.getAppIcon()))).toString();
 	}
 
-	public String getBitmapAsString(final Bitmap image) {
+	private String getBitmapAsString(final Bitmap image) {
 		Bitmap immagex = image;
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		immagex.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -333,8 +497,50 @@ public class ChartboostContext extends FREContext {
 		return imageEncoded;
 	}
 
-	public boolean onBackPressed() {
-		if (isChartboostInitialized == false)
+	public void inPlayShow(final String ID) {
+		if (!isChartboostInitialized)
+			return;
+
+		getActivity().runOnUiThread(new Runnable() {
+			public void run() {
+				if (ID == null)
+					return;
+				int addr = 0;
+				try {
+					addr = Integer.parseInt(ID);
+				} catch (NumberFormatException ex) {
+					return;
+				}
+				CBInPlay inPlay = inPlayObjects.get(addr);
+				if (inPlay != null)
+					inPlay.show();
+			}
+		});
+	}
+
+	public void inPlayClick(final String ID) {
+		if (!isChartboostInitialized)
+			return;
+
+		getActivity().runOnUiThread(new Runnable() {
+			public void run() {
+				if (ID == null)
+					return;
+				int addr = 0;
+				try {
+					addr = Integer.parseInt(ID);
+				} catch (NumberFormatException ex) {
+					return;
+				}
+				CBInPlay inPlay = inPlayObjects.get(addr);
+				if (inPlay != null)
+					inPlay.click();
+			}
+		});
+	}
+
+	public Boolean onBackPressed() {
+		if (!isChartboostInitialized)
 			return false;
 
 		// we need to be able to call Chartboost.onBackPressed and immediately
@@ -346,18 +552,35 @@ public class ChartboostContext extends FREContext {
 			handled = true;
 		return handled;
 	}
-	
-	public void chartBoostShouldDisplayInterstitialCallbackResult(boolean result) {
-		airResponseShouldDisplayInterstitial = result;
+
+	public void shouldDisplayInterstitialCallbackResult(String location, boolean result) {
+		try {
+			Method method = Chartboost.class.getDeclaredMethod("showInterstitialAIR", String.class, boolean.class);
+			method.setAccessible(true);
+			method.invoke(null, location, result);
+		} catch (Exception ex) {
+			CBUtility.throwProguardError(ex);
+		}
 	}
 
-	public void chartBoostShouldDisplayRewardedVideoCallbackResult(
-			boolean result) {
-		airResponseShouldDisplayRewardedVideo = result;
+	public void shouldDisplayMoreAppsCallbackResult(String location, boolean result) {
+		try {
+			Method method = Chartboost.class.getDeclaredMethod("showMoreAppsAIR", String.class, boolean.class);
+			method.setAccessible(true);
+			method.invoke(null, location, result);
+		} catch (Exception ex) {
+			CBUtility.throwProguardError(ex);
+		}
 	}
 
-	public void chartBoostShouldDisplayMoreAppsCallbackResult(boolean result) {
-		airResponseShouldDisplayMoreApps = result;
+	public void shouldDisplayRewardedVideoCallbackResult(String location, boolean result) {
+		try {
+			Method method = Chartboost.class.getDeclaredMethod("showRewardedVideoAIR", String.class, boolean.class);
+			method.setAccessible(true);
+			method.invoke(null, location, result);
+		} catch (Exception ex) {
+			CBUtility.throwProguardError(ex);
+		}
 	}
 	
 	/**
@@ -404,7 +627,7 @@ public class ChartboostContext extends FREContext {
 	 * Return whether or not a new impression of the same type and location
 	 *   is automatically cached when one is shown. (default: true)
 	 */
-	public boolean getAutoCacheAds() {
+	public Boolean getAutoCacheAds() {
 		return Chartboost.getAutoCacheAds();
 	}
 
@@ -495,258 +718,194 @@ public class ChartboostContext extends FREContext {
 
 	// interstitial delegate methods
 		private ChartboostDelegate delegate = new ChartboostDelegate() {
-		@Override
-		public boolean shouldDisplayInterstitial(String location) {
-			Log.d(TAG, "shouldDisplayInterstitialEvent");
-
-			if (hasCheckedWithUnityToDisplayInterstitial) {
-				hasCheckedWithUnityToDisplayInterstitial = false;
-				return unityResponseShouldDisplayInterstitial;
-			} else {
-				hasCheckedWithUnityToDisplayInterstitial = true;
-				UnitySendMessage(gameObjectName, "shouldDisplayInterstitialEvent", location);
+			@Override
+			public boolean shouldDisplayInterstitial(String location) {
+				dispatchStatusEventAsync("shouldDisplayInterstitial", location);
+				return false;
 			}
-			return false;
-		}
-
-		@Override
-		public void didFailToLoadInterstitial(String location, CBImpressionError error) {
-			if(error == null) {
-				error = CBImpressionError.NO_AD_FOUND;
+	
+			@Override
+			public void didFailToLoadInterstitial(String location, CBImpressionError error) {
+				if(error == null)
+					error = CBImpressionError.INTERNAL;
+				JSONObject arguments = JSON(
+						KV(KEY_LOCATION, location),
+						KV(KEY_ERROR_LOAD, error.ordinal())
+					);
+				dispatchStatusEventAsync("didFailToLoadInterstitial", arguments.toString());
 			}
-			JSONObject info = new JSONObject();
-			try {
-				info.put("location", location);
-				info.put("errorCode", error.ordinal());
-			} catch (JSONException e) {
-				Log.d(TAG, "didFailtoLoadInterestialEvent", e);
+	
+			@Override
+			public void didClickInterstitial(String location) {
+				dispatchStatusEventAsync("didClickInterstitial", location);
 			}
-			UnitySendMessage(gameObjectName, "didFailToLoadInterstitialEvent", info.toString());
-		}
-
-		@Override
-		public void didClickInterstitial(String location) {
-			Log.d(TAG, "didClickInterstitialEvent");
-			UnitySendMessage(gameObjectName, "didClickInterstitialEvent", location);
-		}
-
-		@Override
-		public void didCloseInterstitial(String location) {
-			Log.d(TAG, "didCloseInterstitialEvent");
-			UnitySendMessage(gameObjectName, "didCloseInterstitialEvent", location);
-		}
-
-		@Override
-		public void didDismissInterstitial(String location) {
-			Log.d(TAG, "didDismissInterstitialEvent");
-			UnitySendMessage(gameObjectName, "didDismissInterstitialEvent", location);
-		}
-
-		@Override
-		public void didCacheInterstitial(String location) {
-			Log.d(TAG, "didCacheInterstitialEvent");
-			UnitySendMessage(gameObjectName, "didCacheInterstitialEvent", location);
-		}
-
-		@Override
-		public void didDisplayInterstitial(String location) {
-			Log.d(TAG, "didDisplayInterstitialEvent");
-			UnitySendMessage(gameObjectName, "didDisplayInterstitialEvent", location);
-		}
-
-		// more apps delegate methods
-
-		@Override
-		public boolean shouldDisplayMoreApps(String location) {
-			Log.d(TAG, "shouldDisplayMoreAppsEvent");
-
-			if (hasCheckedWithUnityToDisplayMoreApps) {
-				hasCheckedWithUnityToDisplayMoreApps = false;
-				return unityResponseShouldDisplayMoreApps;
-			} else {
-				hasCheckedWithUnityToDisplayMoreApps = true;
-				UnitySendMessage(gameObjectName, "shouldDisplayMoreAppsEvent", location);
+	
+			@Override
+			public void didCloseInterstitial(String location) {
+				dispatchStatusEventAsync("didCloseInterstitial", location);
 			}
-			return false;
-		}
-
-		@Override
-		public void didFailToLoadMoreApps(String location, CBImpressionError error) {
-			if(error == null) {
-				error = CBImpressionError.NO_AD_FOUND;
+	
+			@Override
+			public void didDismissInterstitial(String location) {
+				dispatchStatusEventAsync("didDismissInterstitial", location);
 			}
-			JSONObject errorInfo = new JSONObject();
-			try {
-				errorInfo.put("location", location);
-				errorInfo.put("errorCode", error.ordinal());
-			} catch (JSONException e) {
-				Log.d(TAG, "didFailtoLoadMoreAppsEvent", e);
+	
+			@Override
+			public void didCacheInterstitial(String location) {
+				dispatchStatusEventAsync("didCacheInterstitial", location);
 			}
-			UnitySendMessage(gameObjectName, "didFailToLoadMoreAppsEvent", errorInfo.toString());
-		}
-
-		@Override
-		public void didClickMoreApps(String location) {
-			Log.d(TAG, "didClickMoreAppsEvent");
-			UnitySendMessage(gameObjectName, "didClickMoreAppsEvent", location);
-		}
-
-		@Override
-		public void didCloseMoreApps(String location) {
-			Log.d(TAG, "didCloseMoreAppsEvent");
-			UnitySendMessage(gameObjectName, "didCloseMoreAppsEvent", location);
-		}
-
-		@Override
-		public void didDismissMoreApps(String location) {
-			Log.d(TAG, "didDismissMoreAppsEvent");
-			UnitySendMessage(gameObjectName, "didDismissMoreAppsEvent", location);
-		}
-
-		@Override
-		public void didCacheMoreApps(String location) {
-			Log.d(TAG, "didCacheMoreAppsEvent");
-			UnitySendMessage(gameObjectName, "didCacheMoreAppsEvent", location);
-		}
-
-		@Override
-		public void didDisplayMoreApps(String location) {
-			Log.d(TAG, "didDisplayMoreAppsEvent");
-			UnitySendMessage(gameObjectName, "didDisplayMoreAppsEvent", location);
-		}
-
-		@Override
-		public void didFailToRecordClick(String location, CBClickError error) {
-			if(error == null) {
-				error = CBClickError.INTERNAL;
+	
+			@Override
+			public void didDisplayInterstitial(String location) {
+				dispatchStatusEventAsync("didDisplayInterstitial", location);
 			}
-			Log.d(TAG, "didFailToRecordClickEvent");
-			JSONObject errorMessage = new JSONObject();
-			try {
-				errorMessage.put("location", location);
-				errorMessage.put("errorCode", error.ordinal());
-			} catch (JSONException e) {
-				Log.d(TAG, "didFailToRecordClick", e);
+	
+			// more apps delegate methods
+	
+			@Override
+			public boolean shouldDisplayMoreApps(String location) {
+				dispatchStatusEventAsync("shouldDisplayMoreApps", location);
+				return false;
 			}
-			UnitySendMessage(gameObjectName, "didFailToRecordClickEvent", errorMessage.toString());
-		}
-
-		@Override
-		public boolean shouldDisplayRewardedVideo(String location) {
-			Log.d(TAG, "shouldDisplayRewardedVideoEvent");
-
-			if (hasCheckedWithUnityToDisplayRewardedVideo) {
-				hasCheckedWithUnityToDisplayRewardedVideo = false;
-				return unityResponseShouldDisplayRewardedVideo;
-			} else {
-				hasCheckedWithUnityToDisplayRewardedVideo = true;
-				UnitySendMessage(gameObjectName, "shouldDisplayRewardedVideoEvent", location);
+	
+			@Override
+			public void didFailToLoadMoreApps(String location, CBImpressionError error) {
+				if(error == null)
+					error = CBImpressionError.INTERNAL;
+				JSONObject arguments = JSON(
+						KV(KEY_LOCATION, location),
+						KV(KEY_ERROR_LOAD, error.ordinal())
+					);
+				dispatchStatusEventAsync("didFailToLoadMoreApps", arguments.toString());
 			}
-			return false;
-		}
-
-		@Override
-		public void didCacheRewardedVideo(String location) {
-			Log.d(TAG, "didCacheRewardedVideoEvent");
-			UnitySendMessage(gameObjectName, "didCacheRewardedVideoEvent", location);
-		}
-
-		@Override
-		public void didClickRewardedVideo(String location) {
-			Log.d(TAG, "didClickRewardedVideoEvent");
-			UnitySendMessage(gameObjectName, "didClickRewardedVideoEvent", location);
-		}
-
-		@Override
-		public void didCloseRewardedVideo(String location) {
-			Log.d(TAG, "didCloseRewardedVideoEvent");
-			UnitySendMessage(gameObjectName, "didCloseRewardedVideoEvent", location);
-		}
-
-		@Override
-		public void didCompleteRewardedVideo(String location, int reward) {
-			Log.d(TAG, "didCompleteRewardedVideoEvent");
-			JSONObject errorMessage = new JSONObject();
-			try {
-				errorMessage.put("location", location);
-				errorMessage.put("reward", reward);
-			} catch (JSONException e) {
-				Log.d(TAG, "didCompleteRewardedVideo", e);
+	
+			@Override
+			public void didClickMoreApps(String location) {
+				dispatchStatusEventAsync("didClickMoreApps", location);
 			}
-			UnitySendMessage(gameObjectName, "didCompleteRewardedVideoEvent", errorMessage.toString());
-		}
-
-		@Override
-		public void didDismissRewardedVideo(String location) {
-			Log.d(TAG, "didDismissRewardedVideoEvent");
-			UnitySendMessage(gameObjectName, "didDismissRewardedVideoEvent", location);
-		}
-
-		@Override
-		public void didFailToLoadRewardedVideo(String location, CBImpressionError error) {
-			if(error == null) {
-				error = CBImpressionError.NO_AD_FOUND;
+	
+			@Override
+			public void didCloseMoreApps(String location) {
+				dispatchStatusEventAsync("didCloseMoreApps", location);
 			}
-			Log.d(TAG, "didFailToLoadRewardedVideoEvent");
-			JSONObject errorMessage = new JSONObject();
-			try {
-				errorMessage.put("location", location);
-				errorMessage.put("errorCode", error.ordinal());
-			} catch (JSONException e) {
-				Log.d(TAG, "didFailToLoadRewardedVideoEvent", e);
+	
+			@Override
+			public void didDismissMoreApps(String location) {
+				dispatchStatusEventAsync("didDismissMoreApps", location);
 			}
-			Log.d(TAG, "didFailToLoadRewardedVideoEvent"+errorMessage);
-
-			UnitySendMessage(gameObjectName, "didFailToLoadRewardedVideoEvent", errorMessage.toString());
-		}
-		
-		@Override
-		public void didDisplayRewardedVideo(String location) {
-			Log.d(TAG, "didDisplayRewardedVideoEvent");
-			UnitySendMessage(gameObjectName, "didDisplayRewardedVideoEvent", location);
-		}
-
-		/*
-		@Override
-		public void didCacheInPlay(String location) {
-			Log.d(TAG, "didCacheInPlayEvent");
-			UnitySendMessage(gameObjectName, "didCacheInPlayEvent", location);
-		}
-		
-		@Override
-		public void didFailToLoadInPlay(String location, CBImpressionError error) {
-			if(error == null) {
-				error = CBImpressionError.NO_AD_FOUND;
+	
+			@Override
+			public void didCacheMoreApps(String location) {
+				dispatchStatusEventAsync("didCacheMoreApps", location);
 			}
-			Log.d(TAG, "didFailToLoadInPlayEvent");
-			JSONObject errorMessage = new JSONObject();
-			try {
-				errorMessage.put("location", location);
-				errorMessage.put("errorCode", error.ordinal());
-			} catch (JSONException e) {
-				Log.d(TAG, "didFailToLoadInPlayEvent", e);
+	
+			@Override
+			public void didDisplayMoreApps(String location) {
+				dispatchStatusEventAsync("didDisplayMoreApps", location);
 			}
-			UnitySendMessage(gameObjectName, "didFailToLoadInPlayEvent", errorMessage.toString());
-		}
-		*/
-
-		@Override
-		public void didPauseClickForConfirmation() {
-			Log.d(TAG, "didPauseClickForConfirmationEvent");
-			UnitySendMessage(gameObjectName, "didPauseClickForConfirmationEvent", "");
-		}
-
-		// non-reported delegate methods
-		@Override
-		public boolean shouldRequestInterstitial(String location) {
-			Log.d(TAG, "shouldRequestInterstitial");
-			return true;
-		}
-
-		@Override
-		public boolean shouldRequestMoreApps(String location) {
-			Log.d(TAG, "shouldRequestMoreApps");
-			return true;
-		}
+	
+			@Override
+			public void didFailToRecordClick(String location, CBClickError error) {
+				if(error == null)
+					error = CBClickError.INTERNAL;
+				JSONObject arguments = JSON(
+						KV(KEY_LOCATION, location),
+						KV(KEY_ERROR_CLICK, error.ordinal())
+					);
+				dispatchStatusEventAsync("didFailToRecordClick", arguments.toString());
+			}
+	
+			@Override
+			public boolean shouldDisplayRewardedVideo(String location) {
+				dispatchStatusEventAsync("shouldDisplayRewardedVideo", location);
+				return false;
+			}
+	
+			@Override
+			public void didCacheRewardedVideo(String location) {
+				dispatchStatusEventAsync("didCacheRewardedVideo", location);
+			}
+	
+			@Override
+			public void didClickRewardedVideo(String location) {
+				dispatchStatusEventAsync("didClickRewardedVideo", location);
+			}
+	
+			@Override
+			public void didCloseRewardedVideo(String location) {
+				dispatchStatusEventAsync("didCloseRewardedVideo", location);
+			}
+	
+			@Override
+			public void didCompleteRewardedVideo(String location, int reward) {
+				JSONObject arguments = JSON(
+						KV(KEY_LOCATION, location),
+						KV(KEY_REWARD, reward)
+					);
+				dispatchStatusEventAsync("didCompleteRewardedVideo", arguments.toString());
+			}
+	
+			@Override
+			public void didDismissRewardedVideo(String location) {
+				dispatchStatusEventAsync("didDismissRewardedVideo", location);
+			}
+	
+			@Override
+			public void didFailToLoadRewardedVideo(String location, CBImpressionError error) {
+				if(error == null) {
+					error = CBImpressionError.NO_AD_FOUND;
+				}
+				JSONObject arguments = JSON(
+						KV(KEY_LOCATION, location),
+						KV(KEY_ERROR_LOAD, error.ordinal())
+					);
+	
+				dispatchStatusEventAsync("didFailToLoadRewardedVideo", arguments.toString());
+			}
+			
+			@Override
+			public void didDisplayRewardedVideo(String location) {
+				dispatchStatusEventAsync("didDisplayRewardedVideo", location);
+			}
+	
+			
+			@Override
+			public void didCacheInPlay(String location) {
+				dispatchStatusEventAsync("didCacheInPlay", location);
+			}
+			
+			@Override
+			public void didFailToLoadInPlay(String location, CBImpressionError error) {
+				if(error == null) {
+					error = CBImpressionError.NO_AD_FOUND;
+				}
+				JSONObject arguments = JSON(
+						KV(KEY_LOCATION, location),
+						KV(KEY_ERROR_LOAD, error.ordinal())
+					);
+				dispatchStatusEventAsync("didFailToLoadInPlay", arguments.toString());
+			}
+			
+	
+			@Override
+			public void didPauseClickForConfirmation() {
+				dispatchStatusEventAsync("didPauseClickForConfirmation", "");
+			}
+			
+			@Override
+			public void willDisplayVideo(String location) {
+				dispatchStatusEventAsync("willDisplayVideo", location);
+			}
+	
+			// non-reported delegate methods
+			@Override
+			public boolean shouldRequestInterstitial(String location) {
+				return true;
+			}
+	
+			@Override
+			public boolean shouldRequestMoreApps(String location) {
+				return true;
+			}
 		}; 
 }

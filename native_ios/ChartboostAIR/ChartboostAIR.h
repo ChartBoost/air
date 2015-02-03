@@ -13,3 +13,4 @@ void ChartboostExtInitializer(void** extDataToSet, FREContextInitializer* ctxIni
                               FREContextFinalizer* ctxFinalizerToSet);
 
 void ChartboostExtFinalizer(void* extData);
+

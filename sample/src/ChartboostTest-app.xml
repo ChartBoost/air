@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<application xmlns="http://ns.adobe.com/air/application/3.1">
+<application xmlns="http://ns.adobe.com/air/application/16.0">
 
 <!-- Adobe AIR Application Descriptor File Template.
 
@@ -49,7 +49,7 @@
 		<content>[This value will be overwritten by Flash Builder in the output app.xml]</content>
 		
 		<!-- The title of the main window. Optional. -->
-		<!-- <title></title> -->
+		<title>Chartboost AIR Sample</title>
 
 		<!-- The type of system chrome to use (either "standard" or "none"). Optional. Default standard. -->
 		<!-- <systemChrome></systemChrome> -->
@@ -105,7 +105,7 @@
 
 		<!-- Whether or not to pan when a soft keyboard is raised or lowered (either "pan" or "none").  Optional.  Defaults "pan." -->
 		<!-- <softKeyboardBehavior></softKeyboardBehavior> -->
-	<autoOrients>true</autoOrients>
+		<autoOrients>true</autoOrients>
         <fullScreen>false</fullScreen>
         <visible>true</visible>
         <softKeyboardBehavior>none</softKeyboardBehavior>
@@ -244,13 +244,17 @@
 				
 				<application>
 					<!-- The app ID and signature for the Android version of your AIR app must be placed here. -->
-					<meta-data android:name="__ChartboostAir__AppID" android:value="4f7aa26ef77659d869000003" />
-					<meta-data android:name="__ChartboostAir__AppSignature" android:value="ee759deefd871ff6e2411c7153dbedefa4aabe38" />
+					<meta-data android:name="__ChartboostAir__AppID" android:value="4f7b433509b6025804000002" />
+					<meta-data android:name="__ChartboostAir__AppSignature" android:value="dd2d41b69ac01b80f443f5b6cf06096d457f82bd" />
 					
 					<!-- Also required for the Chartboost SDK. -->
 			        <activity android:name="com.chartboost.sdk.CBImpressionActivity"
 			                                  android:excludeFromRecents="true" 
-			                                  android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+			                                  android:theme="@android:style/Theme.Translucent.NoTitleBar"
+			                                  android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen" />
+		            <!-- For Google Play Services (required by Chartboost) -->
+		            <meta-data android:name="com.google.android.gms.version"
+		                                      android:value="@integer/google_play_services_version" />
 				</application>
 			</manifest>
 			

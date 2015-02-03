@@ -10,29 +10,29 @@
 	<string>ChartboostAIR</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>46145B76-E4D8-41E9-A4FC-BB35B322EE58</key>
-		<string>ssh://github.com/ChartBoost/air</string>
+		<key>AD85C9CCCD9673398BA2B3C8145D646E0533CF15</key>
+		<string>https://github.com/ChartBoost/air.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>native_ios/ChartboostAIR.xcodeproj/project.xcworkspace</string>
+	<string>native_ios/ChartboostAIR.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>46145B76-E4D8-41E9-A4FC-BB35B322EE58</key>
+		<key>AD85C9CCCD9673398BA2B3C8145D646E0533CF15</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://github.com/ChartBoost/air</string>
+	<string>https://github.com/ChartBoost/air.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>46145B76-E4D8-41E9-A4FC-BB35B322EE58</string>
+	<string>AD85C9CCCD9673398BA2B3C8145D646E0533CF15</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>46145B76-E4D8-41E9-A4FC-BB35B322EE58</string>
+			<string>AD85C9CCCD9673398BA2B3C8145D646E0533CF15</string>
 			<key>IDESourceControlWCCName</key>
 			<string>air</string>
 		</dict>

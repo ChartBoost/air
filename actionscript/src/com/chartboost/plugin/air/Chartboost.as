@@ -1,4 +1,6 @@
-package com.chartboost.plugin.air {
+﻿package com.chartboost.plugin.air {
+	
+	import com.adobe.serialization.json.Json;
 	
 	import flash.desktop.NativeApplication;
 	import flash.events.Event;
@@ -8,7 +10,8 @@ package com.chartboost.plugin.air {
 	import flash.external.ExtensionContext;
 	import flash.system.Capabilities;
 	import flash.ui.Keyboard;
-	
+	import flash.utils.Dictionary;
+
 	public class Chartboost extends EventDispatcher {
 		
 		// make this class a singleton
@@ -20,17 +23,20 @@ package com.chartboost.plugin.air {
 		}
 		
 		// vars
-		private static var extContext:ExtensionContext = null;
+		protected static var extContext:ExtensionContext = null;
+		
+		private var listeners:Dictionary;
 		
 		public function Chartboost(enforcer:SingletonEnforcer) {
 			super();
-			trace("Chartboost constructor() ");
+			nativeLog("Chartboost constructor() ");
 			extContext = ExtensionContext.createExtensionContext("com.chartboost.plugin.air", null);
+			this.listeners = new Dictionary();
 			if (!extContext) {
-				trace("Chartboost constructor failure to create ext context!");
+				nativeLog("Chartboost constructor failure to create ext context!");
 				throw new Error("Chartboost extension unable to be created -- Chartboost is only supported on iOS and Android platforms.");
 			} else {
-				trace("Chartboost constructor registering event listeners!");
+				nativeLog("Chartboost constructor registering event listeners!");
 				extContext.addEventListener(StatusEvent.STATUS, onStatus);
 				NativeApplication.nativeApplication.addEventListener(Event.ACTIVATE, onActivate, false, 0, true);
 				NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, onDeactivate, false, 0, true);
@@ -39,99 +45,6 @@ package com.chartboost.plugin.air {
 				onActivate(null);
 			}
 		}
-		
-		
-		/** methods to handle required android life cycle calls */
-		
-		private function onActivate(event:Event):void {
-			trace("Chartboost onActivate()");
-			if (isPluginSupported() && isAndroid())
-				extContext.call("onActivate");
-		}
-		
-		private function onDeactivate(event:Event):void {
-			trace("Chartboost onDeactivate()");
-			if (isPluginSupported() && isAndroid())
-				extContext.call("onDeactivate");
-		}
-		
-		/* we had trouble reliably capturing the back button,
-		   so right now we are just setting impressions to use activities and capturing it from within java
-		public function onBackPressed():Boolean {
-			if (isPluginSupported() && isAndroid())
-				return extContext.call("onBackPressed");
-			else
-				return false;
-		} */
-		
-		
-		/** Initializes the Chartboost plugin and, on iOS, records the beginning of a user session */
-		public function init(appID:String, appSignature:String):void {
-			if (isPluginSupported() && isIOS())
-				extContext.call("init", appID, appSignature);
-		}
-		
-		
-		/** API methods */
-		
-		/** Caches an interstitial. Location is optional. */
-		public function cacheInterstitial(location:String = "default"):void {
-			if (isPluginSupported())
-				extContext.call("cacheInterstitial", location);
-		}
-		
-		/** Shows an interstitial. Location is optional. */
-		public function showInterstitial(location:String = "default"):void {
-			if (isPluginSupported())
-				extContext.call("showInterstitial", location);
-		}
-		
-		/** Checks to see if an interstitial is cached. Location is optional. */
-		public function hasCachedInterstitial(location:String = "default"):Boolean {
-			if (isPluginSupported())
-				return extContext.call("hasCachedInterstitial", location);
-			else
-				return false;
-		}
-		
-		/** Caches the more apps screen. */
-		public function cacheMoreApps():void {
-			if (isPluginSupported())
-				extContext.call("cacheMoreApps");
-		}
-		
-		/** Shows the more apps screen. */
-		public function showMoreApps():void {
-			if (isPluginSupported())
-				extContext.call("showMoreApps");
-		}
-
-		/** Checks to see if the more apps screen is cached. */
-		public function hasCachedMoreApps():Boolean {
-			if (isPluginSupported())
-				return extContext.call("hasCachedMoreApps");
-			else
-				return false;
-		}
-		
-		/** Force impressions to show in a particular orientation.
-		  * Pass one of the following: "Portrait", "LandscapeLeft", "PortraitUpsideDown", "LandscapeRight".
-		  * Pass an empty string (default) to stop overriding the default orientation. */
-		public function forceOrientation(orientation:String = ""):void {
-			if (isPluginSupported())
-				extContext.call("forceOrientation", orientation);
-		}
-		
-		
-		/** custom event handler */
-		
-		private function onStatus(event:StatusEvent):void {
-			trace("Chartboost onStatus() ", event.type);
-			var cbEvent:ChartboostEvent = ChartboostEvent.wrap(event);
-			if (cbEvent != null)
-				dispatchEvent(cbEvent);
-		}
-		
 		
 		/** helper methods */
 		
@@ -149,14 +62,268 @@ package com.chartboost.plugin.air {
 			return (isAndroid() || isIOS()) && extContext != null;
 		}
 		
+
 		
+		/** methods to handle required android life cycle calls */
+		
+		private function onActivate(event:Event):void {
+			nativeLog("Chartboost onActivate()");
+			if (isPluginSupported() && isAndroid())
+				extContext.call("onActivate");
+		}
+		
+		private function onDeactivate(event:Event):void {
+			nativeLog("Chartboost onDeactivate()");
+			if (isPluginSupported() && isAndroid())
+				extContext.call("onDeactivate");
+		}
+		
+		/* we had trouble reliably capturing the back button,
+		   so right now we are just setting impressions to use activities and capturing it from within java*/
+		public function onBackPressed():Boolean {
+			if (isPluginSupported() && isAndroid())
+				return extContext.call("onBackPressed");
+			else
+				return false;
+		} 
+		
+		/** Initializes the Chartboost plugin and, on iOS, records the beginning of a user session */
+		public function init(appID:String, appSignature:String):void {
+			if (isPluginSupported() && isIOS())
+				extContext.call("init", appID, appSignature);
+		}
+		
+		/** Listen to a delegate event from the <code>ChartboostEvent</code> class. See the documentation
+		 * of the event you choose for the arguments and return value of the function you provide. */
+		public function addDelegateEvent(eventName:String, listener:Function):void {
+			if (eventName == null)
+				return;
+			this.listeners[eventName] = listener;
+		}
+		
+		/** API methods */
+		
+		/** Caches an interstitial. */
+		public function cacheInterstitial(location:String):void {
+			if (isPluginSupported())
+				extContext.call("cacheInterstitial", location);
+		}
+		
+		/** Shows an interstitial. */
+		public function showInterstitial(location:String):void {
+			if (isPluginSupported())
+				extContext.call("showInterstitial", location);
+		}
+		
+		/** Checks to see if an interstitial is cached. */
+		public function hasInterstitial(location:String):Boolean {
+			if (isPluginSupported())
+				return extContext.call("hasInterstitial", location);
+			else
+				return false;
+		}
+		
+		/** Caches the more apps screen. */
+		public function cacheMoreApps(location:String):void {
+			if (isPluginSupported())
+				extContext.call("cacheMoreApps", location);
+		}
+		
+		/** Shows the more apps screen. */
+		public function showMoreApps(location:String):void {
+			if (isPluginSupported())
+				extContext.call("showMoreApps", location);
+		}
+
+		/** Checks to see if the more apps screen is cached. */
+		public function hasMoreApps(location:String):Boolean {
+			if (isPluginSupported())
+				return extContext.call("hasMoreApps", location);
+			else
+				return false;
+		}
+		
+		/** Caches the rewarded video. */
+		public function cacheRewardedVideo(location:String):void {
+			if (isPluginSupported())
+				extContext.call("cacheRewardedVideo", location);
+		}
+		
+		/** Shows the rewarded video. */
+		public function showRewardedVideo(location:String):void {
+			if (isPluginSupported())
+				extContext.call("showRewardedVideo", location);
+		}
+		
+		/** Checks to see if the rewarded video is cached. */
+		public function hasRewardedVideo(location:String):Boolean {
+			if (isPluginSupported())
+				return extContext.call("hasRewardedVideo", location);
+			else
+				return false;
+		}
+		
+		// NOTE: inplay features are currently not working and are commented out
+		/** Caches an InPlay ad.
+		public function cacheInPlay(location:String):void {
+			if (isPluginSupported())
+				extContext.call("cacheInPlay", location);
+		} */
+		
+		/** Gets the cached InPlay ad. Returns null if there is no InPlay object available.
+		public function getInPlay(location:String):CBInPlay {
+			if (isPluginSupported()) {
+				var inPlay:Object = Json.decode(extContext.call("getInPlay", location).ToString());
+				if (inPlay == null)
+					return null;
+				return new CBInPlay(extContext, inPlay);
+			} else
+				return null;
+		} */
+		
+		/** Checks to see if an InPlay ad is cached.
+		public function hasInPlay(location:String):Boolean {
+			if (isPluginSupported())
+				return extContext.call("hasInPlay", location);
+			else
+				return false;
+		} */
+		
+		/** Call this as a result of whatever UI you show in response to the
+		 * delegate method didPauseClickForConfirmation() */
+		public function didPassAgeGate(pass:Boolean):void {
+			if (isPluginSupported())
+				extContext.call("didPassAgeGate", pass);
+		}
+		
+		/** Set custom ID */
+		public function setCustomID(customID:String):void {
+			if (isPluginSupported())
+				extContext.call("setCustomId", customID);
+		}
+		
+		/** Get custom ID */
+		public function getCustomID():String {
+			if (isPluginSupported())
+				return extContext.call("getCustomId").ToString();
+			else
+				return "";
+		}
+		
+		/** Set whether interstitials will be requested in the first user session */
+		public function setShouldRequestInterstitialsInFirstSession(shouldRequest:Boolean):void {
+			if (isPluginSupported())
+				extContext.call("setShouldRequestInterstitialsInFirstSession", shouldRequest);
+		}
+
+		/** Set whether or not to use the age gate feature.
+		 * Call Chartboost.didPassAgeGate() to provide your user's response. */
+		public function setShouldPauseClickForConfirmation(shouldPause:Boolean):void {
+			if (isPluginSupported())
+				extContext.call("setShouldPauseClickForConfirmation", shouldPause);
+		}
+		
+		/** Set whether the more app screen will have a full-screen loading view. */
+		public function setShouldDisplayLoadingViewForMoreApps(shouldDisplay:Boolean):void {
+			if (isPluginSupported())
+				extContext.call("setShouldDisplayLoadingViewForMoreApps", shouldDisplay);
+		}
+		
+		/** Set whether video content is prefetched */
+		public function setShouldPrefetchVideoContent(shouldPrefetch:Boolean):void {
+			if (isPluginSupported())
+				extContext.call("setShouldPrefetchVideoContent", shouldPrefetch);
+		}
+		
+		/** Set whether ads are automatically cached when possible (default: true). */
+		public function setAutoCacheAds(shouldCache:Boolean):void {
+			if (isPluginSupported())
+				extContext.call("setAutoCacheAds", shouldCache);
+		}
+		
+		/** Get whether ads are automatically cached when possible (default: true). */
+		public function getAutoCacheAds():Boolean {
+			if (isPluginSupported())
+				return extContext.call("getAutoCacheAds");
+			else
+				return false;
+		}
+
+		
+		/** Chartboost in-app purchase analytics */
+		public function trackIOSInAppPurchaseEvent(title:String, description:String, price:Number, currency:String, productID:String, receipt:String):void {
+			if (isPluginSupported())
+				extContext.call("trackInAppPurchaseEvent", receipt, title, description, price, productID, currency, productID);
+		}	
+		
+		public function trackGooglePlayInAppPurchaseEvent(title:String, description:String, price:Number, currency:String, productID:String, purchaseData:String, purchaseSignature:String):void {
+			if (isPluginSupported())
+				extContext.call("trackInAppGooglePlayPurchaseEvent", title, description, price.toString(), currency, productID, purchaseData, purchaseSignature);
+		}
+		
+		public function trackAmazonStoreInAppPurchaseEvent(title:String, description:String, price:Number, currency:String, productID:String, userID:String, purchaseToken:String):void {
+			if (isPluginSupported())
+				extContext.call("trackInAppAmazonStorePurchaseEvent", title, description, price.toString(), currency, productID, userID, purchaseToken);
+		}
+		
+		/** should functionality */
+		private function shouldDisplayInterstitial(location:String, fn:Function):void {
+			var shouldDisplayInterstitialResponse:Boolean = true;
+			if (fn != null)
+				shouldDisplayInterstitialResponse = fn(location);
+			if (isPluginSupported())
+				extContext.call("shouldDisplayInterstitialCallbackResult", location, shouldDisplayInterstitialResponse);
+		}
+		
+		private function shouldDisplayMoreApps(location:String, fn:Function):void {
+			var shouldDisplayMoreAppsResponse:Boolean = true;
+			if (fn != null)
+				shouldDisplayMoreAppsResponse = fn(location);
+			if (isPluginSupported())
+				extContext.call("shouldDisplayMoreAppsCallbackResult", location, shouldDisplayMoreAppsResponse);
+		}
+		
+		private function shouldDisplayRewardedVideo(location:String, fn:Function):void {
+			var shouldDisplayRewardedVideoResponse:Boolean = true;
+			if (fn != null)
+				shouldDisplayRewardedVideoResponse = fn(location);
+			if (isPluginSupported())
+				extContext.call("shouldDisplayRewardedVideoCallbackResult", location, shouldDisplayRewardedVideoResponse);
+		}
+		
+		
+		private function onStatus(event:StatusEvent):void {
+			nativeLog("Internal log of event " + event.code + " with data: " + event.level);
+			
+			var fn:Function = this.listeners[event.code];
+			switch (event.code) {
+			case ChartboostEvent.SHOULD_DISPLAY_INTERSTITIAL:
+				shouldDisplayInterstitial(event.level, fn);
+			  	break;
+			case ChartboostEvent.SHOULD_DISPLAY_MOREAPPS:
+				shouldDisplayMoreApps(event.level, fn);
+			  	break;
+			case ChartboostEvent.SHOULD_DISPLAY_REWARDED_VIDEO:
+				shouldDisplayRewardedVideo(event.level, fn);
+				break;
+			default:
+				ChartboostEvent.runDelegateMethod(event, fn);
+			}
+		}
+				
 		/** cleanup */
 		
 		public function dispose():void { 
-			trace("Chartboost dispose() ");
+			nativeLog("Chartboost dispose() ");
 			NativeApplication.nativeApplication.removeEventListener(Event.ACTIVATE, onActivate);
 			NativeApplication.nativeApplication.removeEventListener(Event.DEACTIVATE, onDeactivate);
 			extContext.dispose();
+		}
+		
+		public function nativeLog(log:String):void {
+			// only for testing purposes: we use this special method to do logging even in release builds
+			if (isPluginSupported())
+				extContext.call("nativeLog", log);
 		}
 	}
 }
