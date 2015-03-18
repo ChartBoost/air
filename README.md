@@ -13,13 +13,13 @@
 <ul>
 <li>A Chartboost account</li>
 <li>An app in your dashboard</li>
-<li><a href="/hc/en-us/articles/203473969">The latest AIR plugin</a></li>
-<li><a href="/hc/en-us/articles/201219605">An active publishing campaign</a></li>
+<li><a href="https://answers.chartboost.com/hc/en-us/articles/203473969" target="_blank">The latest AIR plugin</a></li>
+<li><a href="https://answers.chartboost.com/hc/en-us/articles/201219605" target="_blank">An active publishing campaign</a></li>
 </ul>
 <p><strong>Notes</strong></p>
 <ul>
 <li>The Chartboost Adobe AIR plugin is currently in beta</li>
-<li>The plugin uses <a href="/hc/en-us/articles/201219435">iOS SDK v5.1.3</a> and <a href="/hc/en-us/articles/201219445">Android SDK v5.1.0</a></li>
+<li>The plugin uses <a href="https://answers.chartboost.com/hc/en-us/articles/201219435" target="_blank">iOS SDK v5.1.5</a> and <a href="https://answers.chartboost.com/hc/en-us/articles/201219445" target="_blank">Android SDK v5.1.3</a></li>
 <li>The Chartboost AIR plugin supports <strong>iOS 6 and higher</strong> &ndash; Chartboost methods will fail silently on iOS 5 or older operating systems</li>
 <li>Chartboost supports Android 2.3 and higher</li>
 </ul>
@@ -267,8 +267,8 @@ public static const DID_PAUSE_CLICK_FOR_COMFIRMATION:String = "didPauseClickForC
  * Arguments: None */
 public static const DID_COMPLETE_APP_STORE_SHEET_FLOW:String = "didCompleteAppStoreSheetFlow";
 </pre>
-<hr />
+<hr /><
 <h3 id="test">Testing Your Integration</h3>
-<p>To test the setup, <a href="/hc/en-us/articles/201219605">start a publishing campaign</a>, add the app you've been integrating with the plugin to the campaign, then build your project to a device.</p>
+<p>To test the setup, <a href="https://answers.chartboost.com/hc/en-us/articles/201219605" target="_blank">start a publishing campaign</a>, add the app you've been integrating with the plugin to the campaign, then build your project to a device.</p>
 <p>If you can see Chartboost test interstitials where you've called for them in your code, you're good to go! <strong>Be sure to disable Test Mode (from the</strong> App Settings <strong>page) so you can see actual network ads:</strong></p>
 <p class="screenshot"><img src="https://s3.amazonaws.com/chartboost/help_assets/en-us/ios+integration+1.jpg" alt="" /></p>
