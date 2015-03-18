@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="More Apps" viewActivate="init()"
+		xmlns:mx="library://ns.adobe.com/flex/mx"
+		creationComplete="srv.send()">
+	
+	<s:navigationContent>
+		<s:Button icon="@Embed('assets/home.png')"
+				  click="navigator.popToFirstView()"/>
+	</s:navigationContent>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.chartboost.plugin.air.CBLocation;
+			import com.chartboost.plugin.air.Chartboost;
+			import com.chartboost.plugin.air.ChartboostEvent;
+			import com.chartboost.sample.air.CBOptionsView;
+			
+			import spark.events.IndexChangeEvent;
+			
+			private function init():void {
+				ChartboostTest.log("Chartboost View init()");
+				addDelegateMethods();
+			}
+			
+			private function addDelegateMethods():void {
+				Chartboost.getInstance().addDelegateEvent(ChartboostEvent.SHOULD_DISPLAY_MOREAPPS, function (location:String):Boolean {
+					ChartboostTest.log( "Chartboost: should display More Apps: " + location + "? " + CBOptionsView.shouldDisplayMoreApps );
+					return CBOptionsView.shouldDisplayMoreApps;
+				});
+				
+				Chartboost.getInstance().addDelegateEvent(ChartboostEvent.DID_PAUSE_CLICK_FOR_COMFIRMATION, function ():void {
+					ChartboostTest.log( "Chartboost: did pause click for confirmation" );
+					ageGateUI.open(list, true);
+					ageGateUI.y = 100;
+				});
+			}
+			
+			private function answeredAgeGate(passed:Boolean):void {
+				ChartboostTest.log( "Chartboost: age gate passed? " + passed.toString() );
+				Chartboost.getInstance().didPassAgeGate(passed);
+				ageGateUI.close();
+			}
+			
+			private function trackIAP(cost:Number):void {
+				if (Chartboost.isAndroid()) {
+					Chartboost.getInstance().trackGooglePlayInAppPurchaseEvent("IAP_title", "IAP description", cost, "USD", "IAP_id", "purchase_data", "purchase_sig");
+				} else {
+					Chartboost.getInstance().trackIOSInAppPurchaseEvent("IAP_title", "IAP description", cost, "USD", "IAP_id", "receipt");
+				}
+			}
+			
+			
+			private function selectAction(event:IndexChangeEvent):void {
+				ChartboostTest.deselectAction(event, srv.lastResult.list.action);
+				
+				switch (event.newIndex) {
+					case 0 :
+						// statements
+						Chartboost.getInstance().showMoreApps(CBLocation.DEFAULT);
+						break;
+					case 1 :
+						// statements
+						Chartboost.getInstance().cacheMoreApps(CBLocation.DEFAULT);
+						break;
+					case 2 :
+						// statements
+						ChartboostTest.log('more apps cached: ' + Chartboost.getInstance().hasMoreApps(CBLocation.DEFAULT).toString());
+						break;
+					
+					default :
+						// statements
+						
+						break;
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<s:HTTPService id="srv" url="assets/CBMoreApps.xml"/>
+		<s:SkinnablePopUpContainer id="ageGateUI" width="300">
+			<s:Panel title="Did Pause Click for Confirmation">
+				<s:VGroup horizontalAlign="center" paddingTop="20" gap="20" width="100%">
+					<s:Label text="Age gate: are you over 18?"/>
+					<s:HGroup width="100%">
+						<s:Button label="Yes" width="50%" click="answeredAgeGate(true)"/>
+						<s:Button label="No" width="50%" click="answeredAgeGate(false)"/>
+					</s:HGroup>
+				</s:VGroup>
+			</s:Panel>
+		</s:SkinnablePopUpContainer>
+	</fx:Declarations>
+	
+	<s:List id="list" top="0" bottom="0" left="0" right="0"
+			allowMultipleSelection="false"
+			dataProvider="{srv.lastResult.list.action}"
+			change="selectAction(event)"
+			labelField="actionName"/>
+	
+</s:View>

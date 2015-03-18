@@ -1,6 +1,6 @@
 <extension xmlns="http://ns.adobe.com/air/extension/16.0">
 	<id>com.chartboost.plugin.air</id>
-	<versionNumber>5.1.0</versionNumber>
+	<versionNumber>VERSION</versionNumber>
 	<platforms>
 		<platform name="Android-ARM">
 			<applicationDeployment>

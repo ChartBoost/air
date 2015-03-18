@@ -4,8 +4,6 @@
 
 #define JsonString(x) ([[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:(x) options:0 error:NULL] encoding:NSUTF8StringEncoding] autorelease])
 
-NSString *kCBSDKUserAgentSuffix = @"-AIR";
-
 @implementation ChartboostWrapper
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -159,14 +157,20 @@ NSMutableDictionary * InPlayAds = nil;
     
     NSString *icon = nil;
     if (inPlayAd.appIcon && [inPlayAd.appIcon respondsToSelector:@selector(base64EncodedStringWithOptions:)]) {
-        icon = [inPlayAd.appIcon base64EncodedStringWithOptions:kNilOptions];  // iOS 7+
+        // iOS 7+
+        icon = [inPlayAd.appIcon base64EncodedStringWithOptions:kNilOptions];
     } else if (inPlayAd.appIcon) {
-        icon = [inPlayAd.appIcon base64Encoding];                              // pre iOS7
+        // pre iOS7
+        icon = [inPlayAd.appIcon base64Encoding];
     }
     
-    NSString *data = JsonString((@{@"ID": ID,
+    NSString *data = JsonString((@{
+                                   @"ID": ID,
                                    @"name": inPlayAd.appName ? inPlayAd.appName : [NSNull null],
-                                   @"icon": icon ? icon : [NSNull null]}));
+                                   @"icon": icon ? icon : [NSNull null],
+                                   @"location": inPlayAd.location ? inPlayAd.location : [NSNull null]
+                                   }
+                                 ));
     return data;
 }
 
@@ -257,6 +261,12 @@ NSMutableDictionary * InPlayAds = nil;
     if (!IS_IOS6)
         return;
     [Chartboost setAutoCacheAds:autoCacheAds];
+}
+
+- (void)setStatusBarBehavior:(CBStatusBarBehavior)statusBarBehavior {
+    if (!IS_IOS6)
+        return;
+    [Chartboost setStatusBarBehavior:statusBarBehavior];
 }
 
 - (void)setShouldDisplayLoadingViewForMoreApps:(BOOL)shouldDisplay {

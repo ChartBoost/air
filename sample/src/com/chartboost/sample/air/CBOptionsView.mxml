@@ -1,0 +1,102 @@
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009"
+		xmlns:s="library://ns.adobe.com/flex/spark" title="Options" viewActivate="init()">
+	
+	<s:navigationContent>
+		<s:Button icon="@Embed('assets/home.png')"
+				  click="navigator.popToFirstView()"/>
+	</s:navigationContent>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.chartboost.plugin.air.Chartboost;
+			
+			[Bindable]
+			public static var shouldAutoCacheAds:Boolean = true;
+			[Bindable]
+			public static var shouldDisplayInterstitials:Boolean = true;
+			[Bindable]
+			public static var shouldDisplayMoreApps:Boolean = true;
+			[Bindable]
+			public static var shouldDisplayRewardedVideos:Boolean = true;
+			[Bindable]
+			public static var shouldPauseClickForConfirmation:Boolean = false;
+			[Bindable]
+			public static var shouldPrefetchVideoContent:Boolean = true;
+			[Bindable]
+			public static var shouldRequestInterstitialsInFirstSession:Boolean = true;
+			
+			private function init():void {
+				trace("Chartboost View init()");
+			}
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		
+	</fx:Declarations>
+	
+	<s:layout>
+		<s:HorizontalLayout 
+			paddingLeft="10" paddingRight="10"
+			paddingTop="10" paddingBottom="10"
+			gap="5"/>
+	</s:layout>
+	
+	<s:Panel>
+		<s:layout>
+			<s:VerticalLayout 
+				paddingLeft="10" paddingRight="10"
+				paddingTop="10" paddingBottom="10"
+				gap="5"/>
+		</s:layout>
+		<s:CheckBox id="chkAutoCache" 
+					label="Auto Cache Ads" 
+					width="280" 
+					selected="{shouldAutoCacheAds}"
+					change="shouldAutoCacheAds = chkAutoCache.selected; Chartboost.getInstance().setAutoCacheAds(chkAutoCache.selected);" 
+					/>
+		
+		<s:CheckBox id="chkAgeGate" 
+					label="Use Age Gate" 
+					width="280" 
+					selected="{shouldPauseClickForConfirmation}"
+					change="shouldPauseClickForConfirmation = chkAgeGate.selected; Chartboost.getInstance().setShouldPauseClickForConfirmation(chkAgeGate.selected);" 
+					/>
+		
+		<s:CheckBox id="chkPrefetchVideo" 
+					label="Prefetch Video Content" 
+					width="280" 
+					selected="{shouldPrefetchVideoContent}"
+					change="shouldPrefetchVideoContent = chkPrefetchVideo.selected; Chartboost.getInstance().setShouldPrefetchVideoContent(chkPrefetchVideo.selected);" 
+					/>
+		
+		<s:CheckBox id="chkFirstInt" 
+					label="Interstitials in 1st Session" 
+					width="280" 
+					selected="{shouldRequestInterstitialsInFirstSession}"
+					change="shouldRequestInterstitialsInFirstSession = chkFirstInt.selected; Chartboost.getInstance().setShouldRequestInterstitialsInFirstSession(chkFirstInt.selected);" 
+					/>
+		
+		<s:CheckBox id="chkShouldInt" 
+					label="Should display interstitials?" 
+					width="280" 
+					selected="{shouldDisplayInterstitials}"
+					change="shouldDisplayInterstitials = chkShouldInt.selected;" 
+					/>
+		
+		<s:CheckBox id="chkShouldMoreApps" 
+					label="Should display more apps?"
+					width="280" 
+					selected="{shouldDisplayMoreApps}"
+					change="shouldDisplayMoreApps = chkShouldMoreApps.selected;" 
+					/>
+		
+		<s:CheckBox id="chkShouldRV" 
+					label="Should display rewarded video?" 
+					width="280" 
+					selected="{shouldDisplayRewardedVideos}" 
+					change="shouldDisplayRewardedVideos = chkShouldRV.selected;" 
+					/>
+	</s:Panel>
+	
+</s:View>

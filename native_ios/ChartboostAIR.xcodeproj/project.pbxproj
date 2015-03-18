@@ -26,11 +26,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0380F15719F8661F00C7070E /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
-		0380F15919F8661F00C7070E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		0380F15D19F8699C00C7070E /* ChartboostAIR-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ChartboostAIR-Prefix.pch"; sourceTree = "<group>"; };
-		831FE63A18451858006F69BA /* libarclite_iphoneos.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libarclite_iphoneos.a; path = iOS/libarclite_iphoneos.a; sourceTree = SOURCE_ROOT; };
-		8345E1EE1A7EEB7D00B3CD95 /* Chartboost+AIR.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Chartboost+AIR.h"; path = "Chartboost.framework/Versions/A/Headers/Chartboost+AIR.h"; sourceTree = "<group>"; };
+		8345E1EE1A7EEB7D00B3CD95 /* Chartboost+AIR.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Chartboost+AIR.h"; sourceTree = "<group>"; };
 		83A84FCE18148EAC00FD9FA7 /* libChartboostAIR.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libChartboostAIR.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		83A84FD118148EAC00FD9FA7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		83A850041814920700FD9FA7 /* FlashRuntimeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlashRuntimeExtensions.h; sourceTree = "<group>"; };
@@ -39,14 +36,9 @@
 		83A8500D1814920700FD9FA7 /* ChartboostWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChartboostWrapper.m; sourceTree = "<group>"; };
 		83A850121814930600FD9FA7 /* ChartboostAIR.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChartboostAIR.h; sourceTree = "<group>"; };
 		83DEF1371A5E22C60042CBB2 /* libChartboost.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libChartboost.a; sourceTree = "<group>"; };
-		83DEF13F1A5E444B0042CBB2 /* CBAnalytics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CBAnalytics.h; path = Chartboost.framework/Versions/A/Headers/CBAnalytics.h; sourceTree = "<group>"; };
-		83DEF1401A5E444B0042CBB2 /* CBInPlay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CBInPlay.h; path = Chartboost.framework/Versions/A/Headers/CBInPlay.h; sourceTree = "<group>"; };
-		83DEF1411A5E444B0042CBB2 /* CBMoreAppsBadge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CBMoreAppsBadge.h; path = Chartboost.framework/Versions/A/Headers/CBMoreAppsBadge.h; sourceTree = "<group>"; };
-		83DEF1421A5E444B0042CBB2 /* CBMoreAppsButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CBMoreAppsButton.h; path = Chartboost.framework/Versions/A/Headers/CBMoreAppsButton.h; sourceTree = "<group>"; };
-		83DEF1431A5E444B0042CBB2 /* CBNewsfeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CBNewsfeed.h; path = Chartboost.framework/Versions/A/Headers/CBNewsfeed.h; sourceTree = "<group>"; };
-		83DEF1441A5E444B0042CBB2 /* CBNewsfeedUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CBNewsfeedUI.h; path = Chartboost.framework/Versions/A/Headers/CBNewsfeedUI.h; sourceTree = "<group>"; };
-		83DEF1451A5E444B0042CBB2 /* CBStory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CBStory.h; path = Chartboost.framework/Versions/A/Headers/CBStory.h; sourceTree = "<group>"; };
-		83DEF1461A5E444B0042CBB2 /* Chartboost.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Chartboost.h; path = Chartboost.framework/Versions/A/Headers/Chartboost.h; sourceTree = "<group>"; };
+		83DEF13F1A5E444B0042CBB2 /* CBInPlay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CBInPlay.h; sourceTree = "<group>"; };
+		83DEF1461A5E444B0042CBB2 /* Chartboost.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Chartboost.h; sourceTree = "<group>"; };
+		B5D584091AA4F8D8000EAA69 /* CBAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBAnalytics.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,18 +57,11 @@
 		0380F15619F8661F00C7070E /* Chartboost */ = {
 			isa = PBXGroup;
 			children = (
-				0380F15719F8661F00C7070E /* CHANGELOG.md */,
+				B5D584091AA4F8D8000EAA69 /* CBAnalytics.h */,
 				83DEF1371A5E22C60042CBB2 /* libChartboost.a */,
-				83DEF13F1A5E444B0042CBB2 /* CBAnalytics.h */,
-				83DEF1401A5E444B0042CBB2 /* CBInPlay.h */,
-				83DEF1411A5E444B0042CBB2 /* CBMoreAppsBadge.h */,
-				83DEF1421A5E444B0042CBB2 /* CBMoreAppsButton.h */,
-				83DEF1431A5E444B0042CBB2 /* CBNewsfeed.h */,
-				83DEF1441A5E444B0042CBB2 /* CBNewsfeedUI.h */,
-				83DEF1451A5E444B0042CBB2 /* CBStory.h */,
+				83DEF13F1A5E444B0042CBB2 /* CBInPlay.h */,
 				8345E1EE1A7EEB7D00B3CD95 /* Chartboost+AIR.h */,
 				83DEF1461A5E444B0042CBB2 /* Chartboost.h */,
-				0380F15919F8661F00C7070E /* README.md */,
 			);
 			path = Chartboost;
 			sourceTree = "<group>";
@@ -132,7 +117,6 @@
 			isa = PBXGroup;
 			children = (
 				0380F15D19F8699C00C7070E /* ChartboostAIR-Prefix.pch */,
-				831FE63A18451858006F69BA /* libarclite_iphoneos.a */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";

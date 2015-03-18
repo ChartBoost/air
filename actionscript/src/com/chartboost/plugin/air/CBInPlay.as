@@ -1,57 +1,68 @@
 ﻿package com.chartboost.plugin.air {
 	
-	import com.adobe.serialization.json.Json;
-	import flash.utils.ByteArray;
+	import flash.display.BitmapData;
+	import flash.display.Loader;
 	import flash.events.Event;
-	import flash.display.*;
+	import flash.utils.ByteArray;
 	
 	public class CBInPlay {
 		
-		// NOTE: this class is not fully functional yet and is not included in release
-		
 		// vars
 		public var appName:String;
-		public var appIcon:String;
-		private var inPlayUniqueId:String;
-		private var _loader:Loader;
-		private var _callback:Function;
-		private var extContext:Object;
+		public var appIcon:BitmapData;
+		public var location:String;
 		
-		public function CBInPlay(extContext:Object, inPlay:Object) {
+		private var inPlayUniqueId:String;
+		private var appIconData:String;
+		private var loader:Loader;
+		private var extContext:Object;
+		private var iconLoadedCallback:Function;
+		
+		public function CBInPlay(extContext:Object, inPlay:Object, fn:Function = null) {
 			this.inPlayUniqueId = inPlay.ID;
 			this.appName = inPlay.name;
-			this.appIcon = inPlay.icon;
+			this.appIconData = inPlay.icon;
+			this.location = inPlay.location;
 			this.extContext = extContext;
-		}
-		
-		private function loadComplete(e:Event):void {
-			var bmp:BitmapData = new BitmapData(this._loader.width, this._loader.height, true, 0x0);
-			bmp.draw(this._loader);
-			this._loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, loadComplete);
-			if (this._callback != null) {
-				this._callback.call(bmp);
-				this._callback = null;
-			}
-			this._loader = null;
-		}
-		
-		public function loadIcon(loadComplete:Function):void {
-			var newByteArr:ByteArray = Base64.decodeToByteArray(this.appIcon);
+			this.iconLoadedCallback = fn;
 			
-			this._callback = loadComplete;
-			this._loader = new Loader();
-			this._loader.loadBytes(newByteArr);
-			this._loader.contentLoaderInfo.addEventListener(Event.COMPLETE, loadComplete);
+			loadIcon();
 		}
 		
 		public function show():void {
-			if (Chartboost.isPluginSupported())
+			if (Chartboost.isPluginSupported()) {
 				this.extContext.call("inPlayShow", this.inPlayUniqueId);
+			}
 		}
 		
 		public function click():void {
-			if (Chartboost.isPluginSupported())
+			if (Chartboost.isPluginSupported()) {
 				this.extContext.call("inPlayClick", this.inPlayUniqueId);
+			}
+		}
+		
+		private function loadComplete(e:Event):void {
+			// Draw image
+			this.appIcon = new BitmapData(this.loader.width, this.loader.height, true, 0x0);
+			this.appIcon.draw(this.loader);
+			
+			// Cleanup
+			this.loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, loadComplete);
+			this.loader = null;
+			
+			if (this.iconLoadedCallback != null) {
+				this.iconLoadedCallback(this);
+			}
+		}
+		
+		private function loadIcon():void {
+			if (this.appIconData != null) {
+				var newByteArr:ByteArray = Base64.decodeToByteArray(this.appIconData);
+				
+				this.loader = new Loader();
+				this.loader.contentLoaderInfo.addEventListener(Event.COMPLETE, loadComplete);
+				this.loader.loadBytes(newByteArr);
+			}
 		}
 	}
 }

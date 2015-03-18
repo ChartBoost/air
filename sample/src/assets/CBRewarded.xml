@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<list>
+	<action>
+		<id>1</id>
+		<actionName>Show Rewarded Video</actionName>
+	</action>
+	<action>
+		<id>2</id>
+		<actionName>Cache Rewarded Video</actionName>
+	</action>
+	<action>
+		<id>3</id>
+		<actionName>Rewarded Video Cached</actionName>
+	</action>
+</list>

@@ -1,6 +1,6 @@
 package com.chartboost.plugin.air {
 	
-	import flash.utils.*;
+	import flash.utils.describeType;
 	
 	public class CBUtils {
 		public static function InitEnumConstants(inType :*):void {

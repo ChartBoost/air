@@ -5,13 +5,13 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>C01A5E9E-C2A1-4A5A-8A3F-66F0500EB254</string>
+	<string>742F252E-783C-44BD-8BCB-B0E3388AC98E</string>
 	<key>IDESourceControlProjectName</key>
 	<string>ChartboostAIR</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>AD85C9CCCD9673398BA2B3C8145D646E0533CF15</key>
-		<string>https://github.com/ChartBoost/air.git</string>
+		<string>github.com:ChartBoost/adobeair.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>native_ios/ChartboostAIR.xcodeproj</string>
@@ -21,7 +21,7 @@
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/ChartBoost/air.git</string>
+	<string>github.com:ChartBoost/adobeair.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
@@ -34,7 +34,7 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>AD85C9CCCD9673398BA2B3C8145D646E0533CF15</string>
 			<key>IDESourceControlWCCName</key>
-			<string>air</string>
+			<string>adobeair</string>
 		</dict>
 	</array>
 </dict>

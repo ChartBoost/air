@@ -234,6 +234,12 @@ DeclareAirMethod(getAutoCacheAds) {
     return returnBool(cacheAds);
 }
 
+DeclareAirMethod(setStatusBarBehavior) {
+    int statusBarBehavior = getIntParam(argv[0]);
+    [[ChartboostWrapper sharedChartboostWrapper] setStatusBarBehavior:statusBarBehavior];
+    return NULL;
+}
+
 
 DeclareAirMethod(didPassAgeGate) {
     BOOL pass = getBoolParam(argv[0]);
@@ -306,6 +312,7 @@ void ChartboostContextInitializer(void* extData, const uint8_t* ctxType, FRECont
         InitAirMethod(getCustomId),
         InitAirMethod(setAutoCacheAds),
         InitAirMethod(getAutoCacheAds),
+        InitAirMethod(setStatusBarBehavior),
         InitAirMethod(didPassAgeGate),
         InitAirMethod(handleOpenURL),
         InitAirMethod(shouldDisplayInterstitialCallbackResult),

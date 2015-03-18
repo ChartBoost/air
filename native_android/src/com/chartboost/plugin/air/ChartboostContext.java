@@ -35,8 +35,6 @@ import com.chartboost.sdk.Tracking.CBAnalytics;
 
 public class ChartboostContext extends FREContext {
 
-	// private static final String TAG = "CBAirAndroidPlugin";
-	
 	private static final String KEY_LOCATION = "location";
 	private static final String KEY_ERROR_LOAD = "errorCode";
 	private static final String KEY_ERROR_CLICK = "errorCode";
@@ -50,7 +48,7 @@ public class ChartboostContext extends FREContext {
 
     public ChartboostContext() {
         methods = new ArrayList<ChartboostFunction<?>>();
-        Log.e("ChartboostAIR", "ChartboostContext.<init>()");
+        Log.i("ChartboostAIR", "ChartboostContext.<init>()");
 
         methods.add(new ChartboostFunction<Void>("init", String.class, String.class) {
             public Void onCall(ChartboostContext context, Object[] args) {
@@ -113,7 +111,7 @@ public class ChartboostContext extends FREContext {
             }
         });
         
-        methods.add(new ChartboostFunction<Boolean>("hasCachedMoreApps", String.class) {
+        methods.add(new ChartboostFunction<Boolean>("hasMoreApps", String.class) {
             public Boolean onCall(ChartboostContext context, Object[] args) {
                 return hasMoreApps((String)args[0]);
             }
@@ -240,6 +238,12 @@ public class ChartboostContext extends FREContext {
             }
         });
         
+        methods.add(new ChartboostFunction<Boolean>("isAnyViewVisible") {
+            public Boolean onCall(ChartboostContext context, Object[] args) {
+            	return isAnyViewVisible();
+            }
+        });
+        
         methods.add(new ChartboostFunction<Void>("setShouldRequestInterstitialsInFirstSession", Boolean.class) {
             public Void onCall(ChartboostContext context, Object[] args) {
             	setShouldRequestInterstitialsInFirstSession((Boolean)args[0]);
@@ -277,7 +281,7 @@ public class ChartboostContext extends FREContext {
         
         methods.add(new ChartboostFunction<Void>("nativeLog", String.class) {
             public Void onCall(ChartboostContext context, Object[] args) {
-                Log.e("ChartboostAIR", (String)args[0]);
+                Log.i("ChartboostAIR", (String)args[0]);
                 return null;
             }
         });
@@ -285,7 +289,7 @@ public class ChartboostContext extends FREContext {
 
     @Override
     public void dispose() {
-        Log.e("ChartboostAIR", "ChartboostContext.dispose()");
+        Log.i("ChartboostAIR", "ChartboostContext.dispose()");
     	Chartboost.onPause(getActivity());
         Chartboost.onStop(getActivity());
         Chartboost.onDestroy(getActivity());
@@ -309,7 +313,18 @@ public class ChartboostContext extends FREContext {
     public void init(final String appId, final String appSignature) {
     	handler.post(new Runnable() {
     		public void run() {
-		        Log.e("ChartboostAIR", "ChartboostContext.init()");
+    			if(appId == null || appSignature == null) {
+    				Log.e("Chartboost AIR Plugin", "Your Chartboost app ID and app signature must be set in the Android manifest (using the " +
+    	            		"AIR application descriptor file's <manifestAdditions> tag) or you must call Charboost.as init() method with valid credentials. See the AIR plugin documentation for more details.");
+    				return;
+    			}
+    			
+    			if(isChartboostInitialized == true) {
+    				Log.i("ChartboostAIR", "Chartboost plugin is already initialized.");
+    				return;
+    			}
+    			
+		        Log.i("ChartboostAIR", String.format("Chartboost.init() with appId: %s appSig: %s", appId, appSignature));
 		        Chartboost.startWithAppId(getActivity(), appId, appSignature);
 				Chartboost.setFramework(CBFramework.CBFrameworkAir);
 		    	Chartboost.setImpressionsUseActivities(true);
@@ -324,7 +339,7 @@ public class ChartboostContext extends FREContext {
     }
     
     public void onActivate() {
-        Log.e("ChartboostAIR", "ChartboostContext.onActivate()");
+        Log.i("ChartboostAIR", "ChartboostContext.onActivate()");
         ApplicationInfo ai;
         String appId = null;
         String appSignature = null;
@@ -336,18 +351,15 @@ public class ChartboostContext extends FREContext {
         } catch (Exception e) {
             // ignore
         }
-        if (appId == null || appSignature == null)
-            Log.e("Chartboost AIR Plugin", "Your Chartboost app ID and app signature must be set in the Android manifest (using the " +
-            		"AIR application descriptor file's <manifestAdditions> tag). See the AIR plugin documentation for more details.");
-        else
-            init(appId, appSignature);
+        
+        init(appId, appSignature);
     }
     
     public void onDeactivate() {
     	final Activity activity = getActivity();
     	activity.runOnUiThread(new Runnable() {
     		public void run() {
-    	        Log.e("ChartboostAIR", "ChartboostContext.onDeactivate()");
+    	        Log.i("ChartboostAIR", "ChartboostContext.onDeactivate()");
     	        Chartboost.onPause(activity);
     	        Chartboost.onStop(activity);
     	        Chartboost.onDestroy(activity);
@@ -485,15 +497,16 @@ public class ChartboostContext extends FREContext {
 		
 		return JSON(KV("ID", ""+inPlay.hashCode()),
 				KV("name", inPlay.getAppName()),
+				KV("location", inPlay.getLocation()),
 				KV("icon", getBitmapAsString(inPlay.getAppIcon()))).toString();
 	}
 
 	private String getBitmapAsString(final Bitmap image) {
 		Bitmap immagex = image;
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		immagex.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+		immagex.compress(Bitmap.CompressFormat.PNG, 100, baos);
 		byte[] b = baos.toByteArray();
-		String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
+		String imageEncoded = Base64.encodeToString(b, Base64.NO_WRAP);
 		return imageEncoded;
 	}
 
@@ -637,6 +650,13 @@ public class ChartboostContext extends FREContext {
 	 */
 	public void setAutoCacheAds(boolean autoCacheAds) {
 		Chartboost.setAutoCacheAds(autoCacheAds);
+	}
+	
+	/**
+	 * Return whether or not an impression is visible. (default: false)
+	 */
+	public Boolean isAnyViewVisible() {
+		return Chartboost.isAnyViewVisible();
 	}
 
 	/**

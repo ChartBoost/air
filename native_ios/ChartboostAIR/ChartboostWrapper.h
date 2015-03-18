@@ -55,6 +55,7 @@
 - (NSString*)getCustomId;
 - (void)setAutoCacheAds:(BOOL)autoCacheAds;
 - (BOOL)getAutoCacheAds;
+- (void)setStatusBarBehavior:(CBStatusBarBehavior)statusBarBehavior;
 
 - (void)didPassAgeGate:(BOOL)pass;
 - (void)handleOpenURL:(NSString*)url sourceApp:(NSString*)sourceApp;

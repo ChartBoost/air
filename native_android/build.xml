@@ -41,11 +41,12 @@
 	</target>
 	
 	<target name="package" depends="build" description="Package jar">
+		<!--
 		<echo>Deleting files from local server...</echo>
 		<delete>
 			<fileset dir="${lib.dir}"/>
 		</delete>
-		
+		-->
 		<echo>Copying files to jar output...</echo>
 		<jar jarfile="${lib.dir}/${output}" basedir="${build.dir}" />
 		

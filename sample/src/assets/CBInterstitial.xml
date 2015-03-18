@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<list>
+	<action>
+		<id>1</id>
+		<actionName>Show Interstitial</actionName>
+	</action>
+	<action>
+		<id>2</id>
+		<actionName>Cache Interstitial</actionName>
+	</action>
+	<action>
+		<id>3</id>
+		<actionName>Interstitial Cached</actionName>
+	</action>
+</list>

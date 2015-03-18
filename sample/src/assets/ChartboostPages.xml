@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<list>
+	<page>
+		<id>1</id>
+		<pageTitle>Interstitials</pageTitle>
+		<sourceTitle>CBInterstitialView</sourceTitle>
+	</page>
+	<page>
+		<id>2</id>
+		<pageTitle>Rewarded Video</pageTitle>
+		<sourceTitle>CBRewardedView</sourceTitle>
+	</page>
+	<page>
+		<id>3</id>
+		<pageTitle>More Apps</pageTitle>
+		<sourceTitle>CBMoreAppsView</sourceTitle>
+	</page>
+	<page>
+		<id>4</id>
+		<pageTitle>Native Ads</pageTitle>
+		<sourceTitle>CBInplayView</sourceTitle>
+	</page>
+	<page>
+		<id>5</id>
+		<pageTitle>Options</pageTitle>
+		<sourceTitle>CBOptionsView</sourceTitle>
+	</page>
+</list>

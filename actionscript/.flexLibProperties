@@ -15,8 +15,8 @@
     <classEntry path="com.chartboost.plugin.air.CBLocation"/>
     <classEntry path="com.chartboost.plugin.air.CBUtils"/>
     <classEntry path="com.chartboost.plugin.air.Chartboost"/>
-    <classEntry path="com.chartboost.plugin.air.ChartboostDelegate"/>
     <classEntry path="com.chartboost.plugin.air.ChartboostEvent"/>
+    <classEntry path="com.chartboost.plugin.air.CBStatusBarBehavior"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

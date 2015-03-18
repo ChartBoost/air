@@ -107,12 +107,12 @@
 		public static const DID_DISPLAY_REWARDED_VIDEO:String = "didDisplayRewardedVideo";
 		
 		/** Fired when a rewarded video is cached.<br>
-		 * Arguments: <code>(location:String)</code>
-		public static const DID_CACHE_INPLAY:String = "didCacheInPlay"; */
+		 * Arguments: <code>(location:String)</code> */
+		public static const DID_CACHE_INPLAY:String = "didCacheInPlay";
 		
 		/** Fired when a rewarded video is cached.<br>
-		 * Arguments: <code>(location:String, error:CBLoadError)</code>
-		public static const DID_FAIL_TO_LOAD_INPLAY:String = "didFailToLoadInPlay"; */
+		 * Arguments: <code>(location:String, error:CBLoadError)</code> */
+		public static const DID_FAIL_TO_LOAD_INPLAY:String = "didFailToLoadInPlay";
 		
 		/** Fired when a video is about to be displayed.<br>
 		 * Arguments: <code>(location:String)</code> */
@@ -126,26 +126,8 @@
 		 * Arguments: <code>None</code> */
 		public static const DID_COMPLETE_APP_STORE_SHEET_FLOW:String = "didCompleteAppStoreSheetFlow";
 		
-		private static const EVENT_NAMES:Array = new Array(
-			DID_FAIL_TO_LOAD_INTERSTITIAL, SHOULD_DISPLAY_INTERSTITIAL, DID_CLICK_INTERSTITIAL, DID_CLOSE_INTERSTITIAL,
-			DID_DISMISS_INTERSTITIAL, DID_CACHE_INTERSTITIAL, DID_DISPLAY_INTERSTITIAL,
-			DID_FAIL_TO_LOAD_MOREAPPS, SHOULD_DISPLAY_MOREAPPS, DID_CLICK_MORE_APPS, DID_CLOSE_MORE_APPS,
-			DID_DISMISS_MORE_APPS, DID_CACHE_MORE_APPS, DID_DISPLAY_MORE_APPS,
-			DID_FAIL_TO_RECORD_CLICK, DID_CACHE_REWARDED_VIDEO, DID_CLICK_REWARDED_VIDEO, 
-			DID_CLOSE_REWARDED_VIDEO, DID_COMPLETE_REWARDED_VIDEO, DID_DISMISS_REWARDED_VIDEO,
-			DID_FAIL_TO_LOAD_REWARDED_VIDEO, SHOULD_DISPLAY_REWARDED_VIDEO, DID_DISPLAY_REWARDED_VIDEO, WILL_DISPLAY_VIDEO,
-			DID_PAUSE_CLICK_FOR_COMFIRMATION, DID_COMPLETE_APP_STORE_SHEET_FLOW
-			// DID_CACHE_INPLAY, DID_FAIL_TO_LOAD_INPLAY
-		);
-		
-		// vars
-		public var location:String;
-		public var errorType:int;
-		public var reward:int;
-		
-		public function ChartboostEvent(type:String, location:String) {
-			super(type);
-			this.location = location;
+		public function ChartboostEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false) {
+			super(type, bubbles, cancelable);
 		}
 		
 		public static function runDelegateMethod(event:StatusEvent, fn:Function):void {
@@ -169,14 +151,14 @@
 				case ChartboostEvent.DID_CLOSE_REWARDED_VIDEO :
 				case ChartboostEvent.DID_DISMISS_REWARDED_VIDEO :
 				case ChartboostEvent.DID_DISPLAY_REWARDED_VIDEO :
-				//case ChartboostEvent.DID_CACHE_INPLAY :
+				case ChartboostEvent.DID_CACHE_INPLAY :
 				case ChartboostEvent.WILL_DISPLAY_VIDEO :
 					fn(event.level);
 					break;
 				case ChartboostEvent.DID_FAIL_TO_LOAD_INTERSTITIAL :
 				case ChartboostEvent.DID_FAIL_TO_LOAD_MOREAPPS :
 				case ChartboostEvent.DID_FAIL_TO_LOAD_REWARDED_VIDEO :
-				//case ChartboostEvent.DID_FAIL_TO_LOAD_INPLAY :
+				case ChartboostEvent.DID_FAIL_TO_LOAD_INPLAY :
 					args = Json.decode(event.level);
 					fn(args.location, CBLoadError.wrap(args.errorCode));
 				  break;
