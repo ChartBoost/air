@@ -1,6 +1,19 @@
 Adobe AIR Change Log
 ====================
 
+Version 5.1.3 *(2015-03-23)*
+----------------------------
+>- *Android: Version 5.1.3*
+>- *iOS: Version 5.1.5*
+
+Features:
+
+Fixes:
+
+Improvements:
+
+- Changed the init() method of the AIR native extenstion to startWith().  This solves a symbol conflict for many users that do not use the hideAneLibSymbols or for users with specific build setups. 
+
 Version 5.1.2 *(2015-03-13)*
 ----------------------------
 >- *Android: Version 5.1.3*

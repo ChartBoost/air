@@ -22,12 +22,12 @@ package com.chartboost.plugin.air {
 		public static function wrap(error:int):CBClickError {
 			var result:CBClickError = INVALID_CLICK_ERROR;
 			
-			if (Chartboost.isIOS() && error >= 0 && error < _orderedNamesIOS.Length) {
+			if (Chartboost.isIOS() && error >= 0 && error < _orderedNamesIOS.length) {
 				result = _orderedNamesIOS[error];
-			} else if (Chartboost.isAndroid() && error >= 0 && error < _orderedNamesAndroid.Length) {
+			} else if (Chartboost.isAndroid() && error >= 0 && error < _orderedNamesAndroid.length) {
 				result = _orderedNamesAndroid[error];
 			} else {
-				trace("UNSUPPORTED Chartboost ClickError", error);
+				Chartboost.nativeLog("UNSUPPORTED Chartboost ClickError " + error);
 			}
 			return result;
 		}

@@ -2,7 +2,6 @@
 
 #import "ChartboostAIR.h"
 #import "ChartboostWrapper.h"
-#import "CBAnalytics.h"
 
 /** helpful methods and macros */
 
@@ -70,7 +69,7 @@ FREObject returnBool(BOOL retBool) {
 
 /** context API methods */
 
-DeclareAirMethod(init) {
+DeclareAirMethod(initializeChartboost) {
     NSString *appId = GetStringParam(0);
     NSString *appSig = GetStringParam(1);
 	[[ChartboostWrapper sharedChartboostWrapper] startWithAppId:appId appSignature:appSig];
@@ -287,7 +286,7 @@ void ChartboostContextInitializer(void* extData, const uint8_t* ctxType, FRECont
 	[[ChartboostWrapper sharedChartboostWrapper] initAirContext: ctx];
     
     static FRENamedFunction functionMap[] = {
-        InitAirMethod(init),
+        InitAirMethod(initializeChartboost),
         InitAirMethod(showInterstitial),
         InitAirMethod(cacheInterstitial),
         InitAirMethod(hasInterstitial),

@@ -50,9 +50,9 @@ public class ChartboostContext extends FREContext {
         methods = new ArrayList<ChartboostFunction<?>>();
         Log.i("ChartboostAIR", "ChartboostContext.<init>()");
 
-        methods.add(new ChartboostFunction<Void>("init", String.class, String.class) {
+        methods.add(new ChartboostFunction<Void>("initializeChartboost", String.class, String.class) {
             public Void onCall(ChartboostContext context, Object[] args) {
-                init((String)args[0], (String)args[1]);
+            	initializeChartboost((String)args[0], (String)args[1]);
                 return null;
             }
         });
@@ -310,12 +310,12 @@ public class ChartboostContext extends FREContext {
     // chartboost actions
     private Handler handler = new Handler();
     
-    public void init(final String appId, final String appSignature) {
+    public void initializeChartboost(final String appId, final String appSignature) {
     	handler.post(new Runnable() {
     		public void run() {
     			if(appId == null || appSignature == null) {
     				Log.e("Chartboost AIR Plugin", "Your Chartboost app ID and app signature must be set in the Android manifest (using the " +
-    	            		"AIR application descriptor file's <manifestAdditions> tag) or you must call Charboost.as init() method with valid credentials. See the AIR plugin documentation for more details.");
+    	            		"AIR application descriptor file's <manifestAdditions> tag) or you must call Charboost.as startWith() method with valid credentials. See the AIR plugin documentation for more details.");
     				return;
     			}
     			
@@ -324,7 +324,7 @@ public class ChartboostContext extends FREContext {
     				return;
     			}
     			
-		        Log.i("ChartboostAIR", String.format("Chartboost.init() with appId: %s appSig: %s", appId, appSignature));
+		        Log.i("ChartboostAIR", String.format("Chartboost.startWith() with appId: %s appSig: %s", appId, appSignature));
 		        Chartboost.startWithAppId(getActivity(), appId, appSignature);
 				Chartboost.setFramework(CBFramework.CBFrameworkAir);
 		    	Chartboost.setImpressionsUseActivities(true);
@@ -352,7 +352,7 @@ public class ChartboostContext extends FREContext {
             // ignore
         }
         
-        init(appId, appSignature);
+        initializeChartboost(appId, appSignature);
     }
     
     public void onDeactivate() {

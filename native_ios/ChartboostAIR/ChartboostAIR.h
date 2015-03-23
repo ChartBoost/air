@@ -1,7 +1,5 @@
 // Chartboost AIR iOS native wrapper code
 
-#import "FlashRuntimeExtensions.h"
-
 /** lifecycle methods */
 
 void ChartboostContextInitializer(void* extData, const uint8_t* ctxType, FREContext ctx,

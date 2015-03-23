@@ -48,9 +48,9 @@
 		} 
 		
 		/** Initializes the Chartboost plugin and, on iOS, records the beginning of a user session */
-		public function init(appID:String, appSignature:String):void {
+		public function startWith(appID:String, appSignature:String):void {
 			if (isPluginSupported()) {
-				extContext.call("init", appID, appSignature);
+				extContext.call("initializeChartboost", appID, appSignature);
 			}
 		}
 		

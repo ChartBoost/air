@@ -1,7 +1,7 @@
 /*
  * Chartboost.h
  * Chartboost
- * VERSION
+ * 5.1.5
  *
  * Copyright 2011 Chartboost. All rights reserved.
  */
@@ -26,6 +26,8 @@ typedef NS_ENUM(NSUInteger, CBFramework) {
     CBFrameworkCordova,
     /*! CocoonJS. */
     CBFrameworkCocoonJS,
+    /*! Cocos2d-x. */
+    CBFrameworkCocos2dx,
     /*! MoPub. */
     CBFrameworkMoPub,
     /*! Fyber. */

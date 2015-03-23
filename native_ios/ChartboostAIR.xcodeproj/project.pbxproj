@@ -10,7 +10,10 @@
 		83A84FD218148EAC00FD9FA7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83A84FD118148EAC00FD9FA7 /* Foundation.framework */; };
 		83A8500F1814920700FD9FA7 /* ChartboostAIR.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A8500B1814920700FD9FA7 /* ChartboostAIR.m */; };
 		83A850101814920700FD9FA7 /* ChartboostWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A8500D1814920700FD9FA7 /* ChartboostWrapper.m */; };
-		83DEF1381A5E22C60042CBB2 /* libChartboost.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83DEF1371A5E22C60042CBB2 /* libChartboost.a */; };
+		B5014D5B1ABC7E59006C3AFA /* Chartboost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5014D5A1ABC7E59006C3AFA /* Chartboost.framework */; };
+		B5014D5D1ABC7FAB006C3AFA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5014D5C1ABC7FAB006C3AFA /* UIKit.framework */; };
+		B5014D5E1ABC7FE8006C3AFA /* ChartboostAIR.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 83A850121814930600FD9FA7 /* ChartboostAIR.h */; };
+		B57FEF191ABCAB71008A3557 /* libChartboost.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B57FEF181ABCAB71008A3557 /* libChartboost.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -20,6 +23,7 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				B5014D5E1ABC7FE8006C3AFA /* ChartboostAIR.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -27,18 +31,20 @@
 
 /* Begin PBXFileReference section */
 		0380F15D19F8699C00C7070E /* ChartboostAIR-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ChartboostAIR-Prefix.pch"; sourceTree = "<group>"; };
-		8345E1EE1A7EEB7D00B3CD95 /* Chartboost+AIR.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Chartboost+AIR.h"; sourceTree = "<group>"; };
 		83A84FCE18148EAC00FD9FA7 /* libChartboostAIR.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libChartboostAIR.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		83A84FD118148EAC00FD9FA7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		83A850041814920700FD9FA7 /* FlashRuntimeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlashRuntimeExtensions.h; sourceTree = "<group>"; };
 		83A8500B1814920700FD9FA7 /* ChartboostAIR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChartboostAIR.m; sourceTree = "<group>"; };
 		83A8500C1814920700FD9FA7 /* ChartboostWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChartboostWrapper.h; sourceTree = "<group>"; };
 		83A8500D1814920700FD9FA7 /* ChartboostWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChartboostWrapper.m; sourceTree = "<group>"; };
 		83A850121814930600FD9FA7 /* ChartboostAIR.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChartboostAIR.h; sourceTree = "<group>"; };
-		83DEF1371A5E22C60042CBB2 /* libChartboost.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libChartboost.a; sourceTree = "<group>"; };
-		83DEF13F1A5E444B0042CBB2 /* CBInPlay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CBInPlay.h; sourceTree = "<group>"; };
-		83DEF1461A5E444B0042CBB2 /* Chartboost.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Chartboost.h; sourceTree = "<group>"; };
-		B5D584091AA4F8D8000EAA69 /* CBAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBAnalytics.h; sourceTree = "<group>"; };
+		B5014D591ABC7E2D006C3AFA /* FlashRuntimeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlashRuntimeExtensions.h; sourceTree = SOURCE_ROOT; };
+		B5014D5A1ABC7E59006C3AFA /* Chartboost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Chartboost.framework; sourceTree = "<group>"; };
+		B5014D5C1ABC7FAB006C3AFA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		B57FEF141ABCAB71008A3557 /* CBAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBAnalytics.h; sourceTree = "<group>"; };
+		B57FEF151ABCAB71008A3557 /* CBInPlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBInPlay.h; sourceTree = "<group>"; };
+		B57FEF161ABCAB71008A3557 /* Chartboost+AIR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Chartboost+AIR.h"; sourceTree = "<group>"; };
+		B57FEF171ABCAB71008A3557 /* Chartboost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chartboost.h; sourceTree = "<group>"; };
+		B57FEF181ABCAB71008A3557 /* libChartboost.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libChartboost.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,30 +53,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				83A84FD218148EAC00FD9FA7 /* Foundation.framework in Frameworks */,
-				83DEF1381A5E22C60042CBB2 /* libChartboost.a in Frameworks */,
+				B5014D5D1ABC7FAB006C3AFA /* UIKit.framework in Frameworks */,
+				B57FEF191ABCAB71008A3557 /* libChartboost.a in Frameworks */,
+				B5014D5B1ABC7E59006C3AFA /* Chartboost.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0380F15619F8661F00C7070E /* Chartboost */ = {
-			isa = PBXGroup;
-			children = (
-				B5D584091AA4F8D8000EAA69 /* CBAnalytics.h */,
-				83DEF1371A5E22C60042CBB2 /* libChartboost.a */,
-				83DEF13F1A5E444B0042CBB2 /* CBInPlay.h */,
-				8345E1EE1A7EEB7D00B3CD95 /* Chartboost+AIR.h */,
-				83DEF1461A5E444B0042CBB2 /* Chartboost.h */,
-			);
-			path = Chartboost;
-			sourceTree = "<group>";
-		};
 		83A84FC518148EAC00FD9FA7 = {
 			isa = PBXGroup;
 			children = (
-				83A850031814920700FD9FA7 /* AIR */,
-				0380F15619F8661F00C7070E /* Chartboost */,
+				B57FEF131ABCAB71008A3557 /* Chartboost */,
 				83A850091814920700FD9FA7 /* ChartboostAIR */,
 				83A84FD018148EAC00FD9FA7 /* Frameworks */,
 				83A84FCF18148EAC00FD9FA7 /* Products */,
@@ -88,17 +83,11 @@
 		83A84FD018148EAC00FD9FA7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B5014D5C1ABC7FAB006C3AFA /* UIKit.framework */,
+				B5014D5A1ABC7E59006C3AFA /* Chartboost.framework */,
 				83A84FD118148EAC00FD9FA7 /* Foundation.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		83A850031814920700FD9FA7 /* AIR */ = {
-			isa = PBXGroup;
-			children = (
-				83A850041814920700FD9FA7 /* FlashRuntimeExtensions.h */,
-			);
-			path = AIR;
 			sourceTree = "<group>";
 		};
 		83A850091814920700FD9FA7 /* ChartboostAIR */ = {
@@ -116,9 +105,22 @@
 		83A850111814926A00FD9FA7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B5014D591ABC7E2D006C3AFA /* FlashRuntimeExtensions.h */,
 				0380F15D19F8699C00C7070E /* ChartboostAIR-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B57FEF131ABCAB71008A3557 /* Chartboost */ = {
+			isa = PBXGroup;
+			children = (
+				B57FEF141ABCAB71008A3557 /* CBAnalytics.h */,
+				B57FEF151ABCAB71008A3557 /* CBInPlay.h */,
+				B57FEF161ABCAB71008A3557 /* Chartboost+AIR.h */,
+				B57FEF171ABCAB71008A3557 /* Chartboost.h */,
+				B57FEF181ABCAB71008A3557 /* libChartboost.a */,
+			);
+			path = Chartboost;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -255,7 +257,7 @@
 				DSTROOT = /tmp/Chartboost_AIR.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Chartboost",
+					"$(SRCROOT)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ChartboostAIR/ChartboostAIR-Prefix.pch";
@@ -282,7 +284,7 @@
 				DSTROOT = /tmp/Chartboost_AIR.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Chartboost",
+					"$(SRCROOT)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ChartboostAIR/ChartboostAIR-Prefix.pch";

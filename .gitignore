@@ -7,7 +7,7 @@
 /native_android/lib
 
 # iOS
-*/[Bb]uild/
+#*/[Bb]uild/
 xcshareddata
 xcuserdata
 
@@ -30,12 +30,9 @@ xcuserdata
 */.settings
 
 # output
-bin/android
-bin/ios
-bin/default
-bin-no-gps/android
-bin-no-gps/ios
-bin-no-gps/default
+bin
+bin-no-gps
+/build/builds
 
 # certificates
 /build/chartboost-ios.mobileprovision

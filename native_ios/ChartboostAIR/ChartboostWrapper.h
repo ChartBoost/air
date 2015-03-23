@@ -1,11 +1,9 @@
 // Chartboost AIR iOS native wrapper code
 
-#import <Foundation/Foundation.h>
 #import "Chartboost+AIR.h"
 #import "Chartboost.h"
 #import "CBAnalytics.h"
 #import "CBInPlay.h"
-#import "FlashRuntimeExtensions.h"
 
 #define AirDispatchAsync(_name_) AirDispatchAsyncParam(_name_, @"")
 #define AirDispatchAsyncParam(_name_, _param_) if (self->_airContext != NULL) FREDispatchStatusEventAsync(self->_airContext, (const uint8_t *)#_name_, (const uint8_t *)[_param_ UTF8String])
