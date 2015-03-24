@@ -1,6 +1,20 @@
 Adobe AIR Change Log
 ====================
 
+Version 5.1.4 *(2015-03-23)*
+----------------------------
+>- *Android: Version 5.1.3*
+>- *iOS: Version 5.1.5*
+
+Features:
+
+Fixes:
+
+- Fix issue where cache and show calls were not firing immediatley after bootup for Android. 
+- Fix no host activity error for Android. 
+
+Improvements:
+
 Version 5.1.3 *(2015-03-23)*
 ----------------------------
 >- *Android: Version 5.1.3*

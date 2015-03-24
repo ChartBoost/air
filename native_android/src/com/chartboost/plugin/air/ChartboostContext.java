@@ -16,7 +16,6 @@ import android.app.Activity;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.os.Handler;
 import android.util.Base64;
 import android.util.Log;
 import android.util.SparseArray;
@@ -304,14 +303,8 @@ public class ChartboostContext extends FREContext {
         return funcs;
     }
     
-    
-    
-    
-    // chartboost actions
-    private Handler handler = new Handler();
-    
     public void initializeChartboost(final String appId, final String appSignature) {
-    	handler.post(new Runnable() {
+    	getActivity().runOnUiThread(new Runnable() {
     		public void run() {
     			if(appId == null || appSignature == null) {
     				Log.e("Chartboost AIR Plugin", "Your Chartboost app ID and app signature must be set in the Android manifest (using the " +
@@ -321,10 +314,9 @@ public class ChartboostContext extends FREContext {
     			
     			if(isChartboostInitialized == true) {
     				Log.i("ChartboostAIR", "Chartboost plugin is already initialized.");
-    				return;
     			}
     			
-		        Log.i("ChartboostAIR", String.format("Chartboost.startWith() with appId: %s appSig: %s", appId, appSignature));
+		        Log.i("ChartboostAIR", "Chartboost.startWith()");
 		        Chartboost.startWithAppId(getActivity(), appId, appSignature);
 				Chartboost.setFramework(CBFramework.CBFrameworkAir);
 		    	Chartboost.setImpressionsUseActivities(true);
