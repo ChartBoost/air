@@ -6,6 +6,7 @@
 <li><a href="#preint">Pre-Integration Steps</a></li>
 <li><a href="#int">Interacting With Chartboost</a></li>
 <li><a href="#test">Testing Your Integration</a></li>
+<li><a href="#support">Chartboost Support</a></li>
 </ul>
 <hr />
 <h3 id="overview">Overview</h3>
@@ -272,3 +273,6 @@ public static const DID_COMPLETE_APP_STORE_SHEET_FLOW:String = "didCompleteAppSt
 <p>To test the setup, <a href="https://answers.chartboost.com/hc/en-us/articles/201219605" target="_blank">start a publishing campaign</a>, add the app you've been integrating with the plugin to the campaign, then build your project to a device.</p>
 <p>If you can see Chartboost test interstitials where you've called for them in your code, you're good to go! <strong>Be sure to disable Test Mode (from the</strong> App Settings <strong>page) so you can see actual network ads:</strong></p>
 <p class="screenshot"><img src="https://s3.amazonaws.com/chartboost/help_assets/en-us/ios+integration+1.jpg" alt="" /></p>
+<hr />
+<h3 id="support">Chartboost Support</h3>
+<p>More comprehensive documentation on the Chartboost Adobe AIR Plugin as well as the entire Chartboost system can be found at the <a href="https://answers.chartboost.com" target="_blank">Chartboost Help Site</a>. You can also use the help site to contact the Chartboost Support Team if you're still experiencing any issues or have questions beyond the scope of the documentation.</p>
