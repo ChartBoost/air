@@ -10,7 +10,7 @@ package com.chartboost.plugin.air {
 		public static const QUESTS:String  				= "Quests"; 
 		public static const PAUSE:String  				= "Pause"; 		
 		public static const LEVEL_START:String  		= "Level Start"; 
-		public static const LEVEL_COMPLETE:String  		= "Pause"; 
+		public static const LEVEL_COMPLETE:String  		= "Level Complete"; 
 		public static const IAP_STORE:String  			= "IAP Store"; 
 		public static const ITEM_STORE:String  			= "Item Store"; 
 		public static const GAME_OVER:String  			= "Game Over"; 

@@ -260,7 +260,7 @@
 		/** Chartboost in-app purchase analytics */
 		public function trackIOSInAppPurchaseEvent(title:String, description:String, price:Number, currency:String, productID:String, receipt:String):void {
 			if (isPluginSupported() && isIOS()) {
-				extContext.call("trackInAppPurchaseEvent", receipt, title, description, price, productID, currency, productID);
+				extContext.call("trackInAppPurchaseEvent", receipt, title, description, price, currency, productID);
 			}
 		}	
 		
